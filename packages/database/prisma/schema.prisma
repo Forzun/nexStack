@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client"
+  output = "../src/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id             String      @id    @default(uuid())
+  username       String      @unique
+  password       String
+  website        Website[]
+}
+
+model Website { 
+  id              String       @id    @default(uuid())
+  url             String       
+  createdAt       DateTime
+  user_id         String
+  websiteTick     WebsiteTick[]
+  region          Region[]
+  user            User         @relation(fields: [user_id], references: [id])
+}
+
+model Region { 
+  id              String        @id    @default(uuid())
+  name            String
+  website_id      String
+  websiteTick     WebsiteTick[]
+  website          Website      @relation(fields: [website_id] , references: [id]) 
+}
+
+model WebsiteTick { 
+  id                String         @id     @default(ulid())
+  response_time     Int
+  website_id        String
+  region_id         String
+  status            WebsiteRegion
+  region            Region        @relation(fields: [region_id] , references: [id])
+  website           Website       @relation(fields: [website_id] , references: [id])
+  createdAt         String
+}
+
+enum WebsiteRegion { 
+  UP 
+  DOWN 
+  UNKNOWN
+}
