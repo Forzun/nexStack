@@ -754,7 +754,7 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const WebsiteScalarFieldEnum = {
   id: 'id',
   url: 'url',
-  createdAt: 'createdAt',
+  time_added: 'time_added',
   user_id: 'user_id'
 } as const
 

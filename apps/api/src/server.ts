@@ -9,20 +9,31 @@ const app = express();
 app.use(express.json());
 
 app.post("/website", authMiddleware, async (req, res) => {
+  try{ 
     if(!req.body){
-      res.status(411).json({});
+      res.status(411).json({ 
+        error: "data is not vaild"
+      });
       return
     }
+      console.log("data pase here", {url: req.body.url , userId: req.userId})
     
-    const website = await prisma.website.create({
-      data:{ 
-        url: req.body.url, 
-        createdAt: req.body.url, 
-        user_id: req.userId
-      }
-    })
+      const website = await prisma.website.create({
+         data:{ 
+           url: req.body.url, 
+           time_added: new Date(),
+           user_id: req.userId
+         }
+        })
 
-
+        res.status(201).json(website);
+    }catch(error){
+      console.error("Create website error:", error);
+    
+      res.status(500).json({ 
+        error: "Failed to create website" 
+      });
+    }
 })
 
 app.get("status/:websiteId", authMiddleware , async(req, res) => {
@@ -32,7 +43,7 @@ app.get("status/:websiteId", authMiddleware , async(req, res) => {
         id: req.params.websiteId as string
       },
       include:{ 
-        websiteTick: { 
+        tick: { 
             orderBy: { 
               createdAt:"desc",
             }, 

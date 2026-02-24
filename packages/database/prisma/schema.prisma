@@ -17,11 +17,11 @@ model User {
 model Website { 
   id              String       @id    @default(uuid())
   url             String       
-  createdAt       DateTime
+  time_added       DateTime
   user_id         String
-  websiteTick     WebsiteTick[]
-  region          Region[]
   user            User         @relation(fields: [user_id], references: [id])
+  tick            WebsiteTick[]
+  region          Region[]
 }
 
 model Region { 
@@ -40,7 +40,7 @@ model WebsiteTick {
   status            WebsiteRegion
   region            Region        @relation(fields: [region_id] , references: [id])
   website           Website       @relation(fields: [website_id] , references: [id])
-  createdAt         String
+  createdAt         DateTime      @default(now())
 }
 
 enum WebsiteRegion { 

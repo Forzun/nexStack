@@ -40,7 +40,7 @@ export type WebsiteTickMinAggregateOutputType = {
   website_id: string | null
   region_id: string | null
   status: $Enums.WebsiteRegion | null
-  createdAt: string | null
+  createdAt: Date | null
 }
 
 export type WebsiteTickMaxAggregateOutputType = {
@@ -49,7 +49,7 @@ export type WebsiteTickMaxAggregateOutputType = {
   website_id: string | null
   region_id: string | null
   status: $Enums.WebsiteRegion | null
-  createdAt: string | null
+  createdAt: Date | null
 }
 
 export type WebsiteTickCountAggregateOutputType = {
@@ -191,7 +191,7 @@ export type WebsiteTickGroupByOutputType = {
   website_id: string
   region_id: string
   status: $Enums.WebsiteRegion
-  createdAt: string
+  createdAt: Date
   _count: WebsiteTickCountAggregateOutputType | null
   _avg: WebsiteTickAvgAggregateOutputType | null
   _sum: WebsiteTickSumAggregateOutputType | null
@@ -223,7 +223,7 @@ export type WebsiteTickWhereInput = {
   website_id?: Prisma.StringFilter<"WebsiteTick"> | string
   region_id?: Prisma.StringFilter<"WebsiteTick"> | string
   status?: Prisma.EnumWebsiteRegionFilter<"WebsiteTick"> | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFilter<"WebsiteTick"> | string
+  createdAt?: Prisma.DateTimeFilter<"WebsiteTick"> | Date | string
   region?: Prisma.XOR<Prisma.RegionScalarRelationFilter, Prisma.RegionWhereInput>
   website?: Prisma.XOR<Prisma.WebsiteScalarRelationFilter, Prisma.WebsiteWhereInput>
 }
@@ -248,7 +248,7 @@ export type WebsiteTickWhereUniqueInput = Prisma.AtLeast<{
   website_id?: Prisma.StringFilter<"WebsiteTick"> | string
   region_id?: Prisma.StringFilter<"WebsiteTick"> | string
   status?: Prisma.EnumWebsiteRegionFilter<"WebsiteTick"> | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFilter<"WebsiteTick"> | string
+  createdAt?: Prisma.DateTimeFilter<"WebsiteTick"> | Date | string
   region?: Prisma.XOR<Prisma.RegionScalarRelationFilter, Prisma.RegionWhereInput>
   website?: Prisma.XOR<Prisma.WebsiteScalarRelationFilter, Prisma.WebsiteWhereInput>
 }, "id">
@@ -276,16 +276,16 @@ export type WebsiteTickScalarWhereWithAggregatesInput = {
   website_id?: Prisma.StringWithAggregatesFilter<"WebsiteTick"> | string
   region_id?: Prisma.StringWithAggregatesFilter<"WebsiteTick"> | string
   status?: Prisma.EnumWebsiteRegionWithAggregatesFilter<"WebsiteTick"> | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringWithAggregatesFilter<"WebsiteTick"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"WebsiteTick"> | Date | string
 }
 
 export type WebsiteTickCreateInput = {
   id?: string
   response_time: number
   status: $Enums.WebsiteRegion
-  createdAt: string
+  createdAt?: Date | string
   region: Prisma.RegionCreateNestedOneWithoutWebsiteTickInput
-  website: Prisma.WebsiteCreateNestedOneWithoutWebsiteTickInput
+  website: Prisma.WebsiteCreateNestedOneWithoutTickInput
 }
 
 export type WebsiteTickUncheckedCreateInput = {
@@ -294,16 +294,16 @@ export type WebsiteTickUncheckedCreateInput = {
   website_id: string
   region_id: string
   status: $Enums.WebsiteRegion
-  createdAt: string
+  createdAt?: Date | string
 }
 
 export type WebsiteTickUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   response_time?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumWebsiteRegionFieldUpdateOperationsInput | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   region?: Prisma.RegionUpdateOneRequiredWithoutWebsiteTickNestedInput
-  website?: Prisma.WebsiteUpdateOneRequiredWithoutWebsiteTickNestedInput
+  website?: Prisma.WebsiteUpdateOneRequiredWithoutTickNestedInput
 }
 
 export type WebsiteTickUncheckedUpdateInput = {
@@ -312,7 +312,7 @@ export type WebsiteTickUncheckedUpdateInput = {
   website_id?: Prisma.StringFieldUpdateOperationsInput | string
   region_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumWebsiteRegionFieldUpdateOperationsInput | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type WebsiteTickCreateManyInput = {
@@ -321,14 +321,14 @@ export type WebsiteTickCreateManyInput = {
   website_id: string
   region_id: string
   status: $Enums.WebsiteRegion
-  createdAt: string
+  createdAt?: Date | string
 }
 
 export type WebsiteTickUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   response_time?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumWebsiteRegionFieldUpdateOperationsInput | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type WebsiteTickUncheckedUpdateManyInput = {
@@ -337,7 +337,7 @@ export type WebsiteTickUncheckedUpdateManyInput = {
   website_id?: Prisma.StringFieldUpdateOperationsInput | string
   region_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumWebsiteRegionFieldUpdateOperationsInput | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type WebsiteTickListRelationFilter = {
@@ -485,7 +485,7 @@ export type WebsiteTickCreateWithoutWebsiteInput = {
   id?: string
   response_time: number
   status: $Enums.WebsiteRegion
-  createdAt: string
+  createdAt?: Date | string
   region: Prisma.RegionCreateNestedOneWithoutWebsiteTickInput
 }
 
@@ -494,7 +494,7 @@ export type WebsiteTickUncheckedCreateWithoutWebsiteInput = {
   response_time: number
   region_id: string
   status: $Enums.WebsiteRegion
-  createdAt: string
+  createdAt?: Date | string
 }
 
 export type WebsiteTickCreateOrConnectWithoutWebsiteInput = {
@@ -532,15 +532,15 @@ export type WebsiteTickScalarWhereInput = {
   website_id?: Prisma.StringFilter<"WebsiteTick"> | string
   region_id?: Prisma.StringFilter<"WebsiteTick"> | string
   status?: Prisma.EnumWebsiteRegionFilter<"WebsiteTick"> | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFilter<"WebsiteTick"> | string
+  createdAt?: Prisma.DateTimeFilter<"WebsiteTick"> | Date | string
 }
 
 export type WebsiteTickCreateWithoutRegionInput = {
   id?: string
   response_time: number
   status: $Enums.WebsiteRegion
-  createdAt: string
-  website: Prisma.WebsiteCreateNestedOneWithoutWebsiteTickInput
+  createdAt?: Date | string
+  website: Prisma.WebsiteCreateNestedOneWithoutTickInput
 }
 
 export type WebsiteTickUncheckedCreateWithoutRegionInput = {
@@ -548,7 +548,7 @@ export type WebsiteTickUncheckedCreateWithoutRegionInput = {
   response_time: number
   website_id: string
   status: $Enums.WebsiteRegion
-  createdAt: string
+  createdAt?: Date | string
 }
 
 export type WebsiteTickCreateOrConnectWithoutRegionInput = {
@@ -582,14 +582,14 @@ export type WebsiteTickCreateManyWebsiteInput = {
   response_time: number
   region_id: string
   status: $Enums.WebsiteRegion
-  createdAt: string
+  createdAt?: Date | string
 }
 
 export type WebsiteTickUpdateWithoutWebsiteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   response_time?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumWebsiteRegionFieldUpdateOperationsInput | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   region?: Prisma.RegionUpdateOneRequiredWithoutWebsiteTickNestedInput
 }
 
@@ -598,7 +598,7 @@ export type WebsiteTickUncheckedUpdateWithoutWebsiteInput = {
   response_time?: Prisma.IntFieldUpdateOperationsInput | number
   region_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumWebsiteRegionFieldUpdateOperationsInput | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type WebsiteTickUncheckedUpdateManyWithoutWebsiteInput = {
@@ -606,7 +606,7 @@ export type WebsiteTickUncheckedUpdateManyWithoutWebsiteInput = {
   response_time?: Prisma.IntFieldUpdateOperationsInput | number
   region_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumWebsiteRegionFieldUpdateOperationsInput | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type WebsiteTickCreateManyRegionInput = {
@@ -614,15 +614,15 @@ export type WebsiteTickCreateManyRegionInput = {
   response_time: number
   website_id: string
   status: $Enums.WebsiteRegion
-  createdAt: string
+  createdAt?: Date | string
 }
 
 export type WebsiteTickUpdateWithoutRegionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   response_time?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumWebsiteRegionFieldUpdateOperationsInput | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFieldUpdateOperationsInput | string
-  website?: Prisma.WebsiteUpdateOneRequiredWithoutWebsiteTickNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  website?: Prisma.WebsiteUpdateOneRequiredWithoutTickNestedInput
 }
 
 export type WebsiteTickUncheckedUpdateWithoutRegionInput = {
@@ -630,7 +630,7 @@ export type WebsiteTickUncheckedUpdateWithoutRegionInput = {
   response_time?: Prisma.IntFieldUpdateOperationsInput | number
   website_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumWebsiteRegionFieldUpdateOperationsInput | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type WebsiteTickUncheckedUpdateManyWithoutRegionInput = {
@@ -638,7 +638,7 @@ export type WebsiteTickUncheckedUpdateManyWithoutRegionInput = {
   response_time?: Prisma.IntFieldUpdateOperationsInput | number
   website_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumWebsiteRegionFieldUpdateOperationsInput | $Enums.WebsiteRegion
-  createdAt?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -711,7 +711,7 @@ export type $WebsiteTickPayload<ExtArgs extends runtime.Types.Extensions.Interna
     website_id: string
     region_id: string
     status: $Enums.WebsiteRegion
-    createdAt: string
+    createdAt: Date
   }, ExtArgs["result"]["websiteTick"]>
   composites: {}
 }
@@ -1142,7 +1142,7 @@ export interface WebsiteTickFieldRefs {
   readonly website_id: Prisma.FieldRef<"WebsiteTick", 'String'>
   readonly region_id: Prisma.FieldRef<"WebsiteTick", 'String'>
   readonly status: Prisma.FieldRef<"WebsiteTick", 'WebsiteRegion'>
-  readonly createdAt: Prisma.FieldRef<"WebsiteTick", 'String'>
+  readonly createdAt: Prisma.FieldRef<"WebsiteTick", 'DateTime'>
 }
     
 

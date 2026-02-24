@@ -1,4 +1,5 @@
 import {createClient} from "redis"
+import { prisma } from "@workspace/database";
 
 const client = createClient();
 
@@ -7,12 +8,20 @@ async function main(){
     client.on('error', (error) => console.log(`Redis Error: ${error}`))
     console.log("server connect successfully");
 
-    const res = await client.xAdd('nexstack:website', "*", { 
-        url: "google.com", 
-        id:"1"
-    })
+    const websites = await prisma.website.findMany({ 
+        select: {
+            url: true,
+            id: true
+        }
+    });
 
-    console.log(res); 
+    websites.forEach( async (website) => { 
+        const res = await client.xAdd('nexstack:website', "*", { 
+            url: website.url,
+            id: website.id
+        })            
+        console.log(res);
+    })
     client.destroy();
 }
 
