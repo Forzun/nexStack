@@ -34,7 +34,8 @@ try{
     
     const response = await xReadGroup(CONSUMER_GROUP_NAME , '1');
 
-    response.map(({id , message}) => { 
+    const promises = response.map(({id , message}) => { 
+        new Promise<void>((resolve , reject ) => {
         const startTime = Date.now();
         const websiteId = message.id;
         const websiteUrl = message.url;
@@ -43,16 +44,29 @@ try{
                 const endTime = Date.now() 
                 await prisma.websiteTick.create({
                     data: { 
-                        response_time: Date.now() - startTime,
+                        response_time: endTime- startTime,
                         status: "UP", 
                         website_id: websiteId,
                         createdAt: new Date(),
                     }
                 })
-            }).catch(() => {
-
+                resolve();
+            }).catch(async() => {
+                const endTime = Date.now()
+                await prisma.websiteTick.create({ 
+                    data: {
+                        response_time: endTime- startTime,
+                        status: "DOWN", 
+                        website_id: websiteId,
+                        createdAt: new Date(),
+                    }
+                })
+                resolve()
             })
     })
+})
+    await Promise.all(promises)    
+
 
 }catch(error){
     console.log(error)
@@ -76,4 +90,10 @@ async function xReadGroup(consumerGroup:string , workerId:string):Promise<messag
     // @ts-ignore
     let messages:message[] = res[0].messages;
     return messages
+}
+
+async function xAck(steamKey: string , consumerId: string , id: string){ 
+
+    const response = await client.xAck(steamKey , consumerId , id);
+    return response;
 }

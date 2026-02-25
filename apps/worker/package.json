@@ -15,6 +15,7 @@
   "dependencies": {
     "@workspace/database": "workspace:*",
     "axios": "^1.13.5",
+    "dotenv": "^17.3.1",
     "redis": "^5.11.0"
   },
   "packageManager": "pnpm@10.4.1",
