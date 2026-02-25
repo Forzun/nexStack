@@ -9,59 +9,60 @@ const app = express();
 app.use(express.json());
 
 app.post("/website", authMiddleware, async (req, res) => {
-  try{ 
-    if(!req.body){
-      res.status(411).json({ 
+  try {
+    if (!req.body) {
+      res.status(411).json({
         error: "data is not vaild"
       });
       return
     }
-      console.log("data pase here", {url: req.body.url , userId: req.userId})
-    
-      const website = await prisma.website.create({
-         data:{ 
-           url: req.body.url, 
-           time_added: new Date(),
-           user_id: req.userId
-         }
-        })
+    console.log("data pase here", { url: req.body.url, userId: req.userId })
 
-        res.status(201).json(website);
-    }catch(error){
-      console.error("Create website error:", error);
-    
-      res.status(500).json({ 
-        error: "Failed to create website" 
-      });
-    }
+    const website = await prisma.website.create({
+      data: {
+        url: req.body.url,
+        time_added: new Date(),
+        user_id: req.userId
+      }
+    })
+
+    res.status(201).json(website);
+  } catch (error) {
+    console.error("Create website error:", error);
+
+    res.status(500).json({
+      error: "Failed to create website"
+    });
+  }
 })
 
-app.get("status/:websiteId", authMiddleware , async(req, res) => {
-    const website = await prisma.website.findFirst({
-      where: {
-        user_id: req.userId,
-        id: req.params.websiteId as string
-      },
-      include:{ 
-        tick: { 
-            orderBy: { 
-              createdAt:"desc",
-            }, 
-            take:1
-        }
-      },
-    })
 
-    if(!website){
-      res.status(409).json({
-        message:"not found"
-      })
-      return;
-    }
+app.get("status/:websiteId", authMiddleware, async (req, res) => {
+  const website = await prisma.website.findFirst({
+    where: {
+      user_id: req.userId,
+      id: req.params.websiteId as string
+    },
+    include: {
+      tick: {
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 1
+      }
+    },
+  })
 
-    res.json({
-      website
+  if (!website) {
+    res.status(409).json({
+      message: "not found"
     })
+    return;
+  }
+
+  res.json({
+    website
+  })
 })
 
 
@@ -85,7 +86,7 @@ app.post("/user/signup", async (req, res) => {
 
     if (existingUser) {
       res.status(409).json({
-        message: "oops user already exist", 
+        message: "oops user already exist",
         id: existingUser.id
       })
     }
@@ -102,7 +103,7 @@ app.post("/user/signup", async (req, res) => {
     }
 
     return res.status(200).json({
-      message: "successed!", 
+      message: "successed!",
       id: user.id
     })
 
@@ -114,45 +115,45 @@ app.post("/user/signup", async (req, res) => {
 })
 
 app.post("/user/signin", async (req, res) => {
-  try{ 
-    const data = AuthInput.safeParse(req.body); 
+  try {
+    const data = AuthInput.safeParse(req.body);
 
-  if(!data.success){
-    res.status(403).send("wrong input"); 
-    return;
-  }
-
-  const { username, password } = data.data
-
-  if (!data.success) {
-    res.status(403).send("wrong!")
-    return;
-  }
-
-  let user = await prisma.user.findFirst({
-    where: {
-      username: username
+    if (!data.success) {
+      res.status(403).send("wrong input");
+      return;
     }
-  })
 
-  if (!user) {
-    res.status(403).send("")
-    return;
-  }
+    const { username, password } = data.data
 
-  if (user.password != password) {
-    res.status(403).send("")
-    return;
-  }
+    if (!data.success) {
+      res.status(403).send("wrong!")
+      return;
+    }
 
-  let token = jwt.sign({
-    sb: user.id,
-  }, process.env.JWT_SECRET!)
+    let user = await prisma.user.findFirst({
+      where: {
+        username: username
+      }
+    })
 
-  res.status(200).json({
-    token: token
-  })
-  }catch(error){
+    if (!user) {
+      res.status(403).send("")
+      return;
+    }
+
+    if (user.password != password) {
+      res.status(403).send("")
+      return;
+    }
+
+    let token = jwt.sign({
+      sub: user.id,
+    }, process.env.JWT_SECRET!)
+
+    res.status(200).json({
+      token: token
+    })
+  } catch (error) {
     res.status(403).send("wrong")
   }
 })

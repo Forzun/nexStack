@@ -166,7 +166,6 @@ export type RegionWhereInput = {
   id?: Prisma.StringFilter<"Region"> | string
   name?: Prisma.StringFilter<"Region"> | string
   website_id?: Prisma.StringFilter<"Region"> | string
-  websiteTick?: Prisma.WebsiteTickListRelationFilter
   website?: Prisma.XOR<Prisma.WebsiteScalarRelationFilter, Prisma.WebsiteWhereInput>
 }
 
@@ -174,7 +173,6 @@ export type RegionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   website_id?: Prisma.SortOrder
-  websiteTick?: Prisma.WebsiteTickOrderByRelationAggregateInput
   website?: Prisma.WebsiteOrderByWithRelationInput
 }
 
@@ -185,7 +183,6 @@ export type RegionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.RegionWhereInput | Prisma.RegionWhereInput[]
   name?: Prisma.StringFilter<"Region"> | string
   website_id?: Prisma.StringFilter<"Region"> | string
-  websiteTick?: Prisma.WebsiteTickListRelationFilter
   website?: Prisma.XOR<Prisma.WebsiteScalarRelationFilter, Prisma.WebsiteWhereInput>
 }, "id">
 
@@ -210,7 +207,6 @@ export type RegionScalarWhereWithAggregatesInput = {
 export type RegionCreateInput = {
   id?: string
   name: string
-  websiteTick?: Prisma.WebsiteTickCreateNestedManyWithoutRegionInput
   website: Prisma.WebsiteCreateNestedOneWithoutRegionInput
 }
 
@@ -218,13 +214,11 @@ export type RegionUncheckedCreateInput = {
   id?: string
   name: string
   website_id: string
-  websiteTick?: Prisma.WebsiteTickUncheckedCreateNestedManyWithoutRegionInput
 }
 
 export type RegionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  websiteTick?: Prisma.WebsiteTickUpdateManyWithoutRegionNestedInput
   website?: Prisma.WebsiteUpdateOneRequiredWithoutRegionNestedInput
 }
 
@@ -232,7 +226,6 @@ export type RegionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   website_id?: Prisma.StringFieldUpdateOperationsInput | string
-  websiteTick?: Prisma.WebsiteTickUncheckedUpdateManyWithoutRegionNestedInput
 }
 
 export type RegionCreateManyInput = {
@@ -280,11 +273,6 @@ export type RegionMinOrderByAggregateInput = {
   website_id?: Prisma.SortOrder
 }
 
-export type RegionScalarRelationFilter = {
-  is?: Prisma.RegionWhereInput
-  isNot?: Prisma.RegionWhereInput
-}
-
 export type RegionCreateNestedManyWithoutWebsiteInput = {
   create?: Prisma.XOR<Prisma.RegionCreateWithoutWebsiteInput, Prisma.RegionUncheckedCreateWithoutWebsiteInput> | Prisma.RegionCreateWithoutWebsiteInput[] | Prisma.RegionUncheckedCreateWithoutWebsiteInput[]
   connectOrCreate?: Prisma.RegionCreateOrConnectWithoutWebsiteInput | Prisma.RegionCreateOrConnectWithoutWebsiteInput[]
@@ -327,30 +315,14 @@ export type RegionUncheckedUpdateManyWithoutWebsiteNestedInput = {
   deleteMany?: Prisma.RegionScalarWhereInput | Prisma.RegionScalarWhereInput[]
 }
 
-export type RegionCreateNestedOneWithoutWebsiteTickInput = {
-  create?: Prisma.XOR<Prisma.RegionCreateWithoutWebsiteTickInput, Prisma.RegionUncheckedCreateWithoutWebsiteTickInput>
-  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutWebsiteTickInput
-  connect?: Prisma.RegionWhereUniqueInput
-}
-
-export type RegionUpdateOneRequiredWithoutWebsiteTickNestedInput = {
-  create?: Prisma.XOR<Prisma.RegionCreateWithoutWebsiteTickInput, Prisma.RegionUncheckedCreateWithoutWebsiteTickInput>
-  connectOrCreate?: Prisma.RegionCreateOrConnectWithoutWebsiteTickInput
-  upsert?: Prisma.RegionUpsertWithoutWebsiteTickInput
-  connect?: Prisma.RegionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.RegionUpdateToOneWithWhereWithoutWebsiteTickInput, Prisma.RegionUpdateWithoutWebsiteTickInput>, Prisma.RegionUncheckedUpdateWithoutWebsiteTickInput>
-}
-
 export type RegionCreateWithoutWebsiteInput = {
   id?: string
   name: string
-  websiteTick?: Prisma.WebsiteTickCreateNestedManyWithoutRegionInput
 }
 
 export type RegionUncheckedCreateWithoutWebsiteInput = {
   id?: string
   name: string
-  websiteTick?: Prisma.WebsiteTickUncheckedCreateNestedManyWithoutRegionInput
 }
 
 export type RegionCreateOrConnectWithoutWebsiteInput = {
@@ -388,46 +360,6 @@ export type RegionScalarWhereInput = {
   website_id?: Prisma.StringFilter<"Region"> | string
 }
 
-export type RegionCreateWithoutWebsiteTickInput = {
-  id?: string
-  name: string
-  website: Prisma.WebsiteCreateNestedOneWithoutRegionInput
-}
-
-export type RegionUncheckedCreateWithoutWebsiteTickInput = {
-  id?: string
-  name: string
-  website_id: string
-}
-
-export type RegionCreateOrConnectWithoutWebsiteTickInput = {
-  where: Prisma.RegionWhereUniqueInput
-  create: Prisma.XOR<Prisma.RegionCreateWithoutWebsiteTickInput, Prisma.RegionUncheckedCreateWithoutWebsiteTickInput>
-}
-
-export type RegionUpsertWithoutWebsiteTickInput = {
-  update: Prisma.XOR<Prisma.RegionUpdateWithoutWebsiteTickInput, Prisma.RegionUncheckedUpdateWithoutWebsiteTickInput>
-  create: Prisma.XOR<Prisma.RegionCreateWithoutWebsiteTickInput, Prisma.RegionUncheckedCreateWithoutWebsiteTickInput>
-  where?: Prisma.RegionWhereInput
-}
-
-export type RegionUpdateToOneWithWhereWithoutWebsiteTickInput = {
-  where?: Prisma.RegionWhereInput
-  data: Prisma.XOR<Prisma.RegionUpdateWithoutWebsiteTickInput, Prisma.RegionUncheckedUpdateWithoutWebsiteTickInput>
-}
-
-export type RegionUpdateWithoutWebsiteTickInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  website?: Prisma.WebsiteUpdateOneRequiredWithoutRegionNestedInput
-}
-
-export type RegionUncheckedUpdateWithoutWebsiteTickInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  website_id?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
 export type RegionCreateManyWebsiteInput = {
   id?: string
   name: string
@@ -436,13 +368,11 @@ export type RegionCreateManyWebsiteInput = {
 export type RegionUpdateWithoutWebsiteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  websiteTick?: Prisma.WebsiteTickUpdateManyWithoutRegionNestedInput
 }
 
 export type RegionUncheckedUpdateWithoutWebsiteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  websiteTick?: Prisma.WebsiteTickUncheckedUpdateManyWithoutRegionNestedInput
 }
 
 export type RegionUncheckedUpdateManyWithoutWebsiteInput = {
@@ -451,43 +381,12 @@ export type RegionUncheckedUpdateManyWithoutWebsiteInput = {
 }
 
 
-/**
- * Count Type RegionCountOutputType
- */
-
-export type RegionCountOutputType = {
-  websiteTick: number
-}
-
-export type RegionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  websiteTick?: boolean | RegionCountOutputTypeCountWebsiteTickArgs
-}
-
-/**
- * RegionCountOutputType without action
- */
-export type RegionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the RegionCountOutputType
-   */
-  select?: Prisma.RegionCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * RegionCountOutputType without action
- */
-export type RegionCountOutputTypeCountWebsiteTickArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.WebsiteTickWhereInput
-}
-
 
 export type RegionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   website_id?: boolean
-  websiteTick?: boolean | Prisma.Region$websiteTickArgs<ExtArgs>
   website?: boolean | Prisma.WebsiteDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.RegionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["region"]>
 
 export type RegionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -512,9 +411,7 @@ export type RegionSelectScalar = {
 
 export type RegionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "website_id", ExtArgs["result"]["region"]>
 export type RegionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  websiteTick?: boolean | Prisma.Region$websiteTickArgs<ExtArgs>
   website?: boolean | Prisma.WebsiteDefaultArgs<ExtArgs>
-  _count?: boolean | Prisma.RegionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RegionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   website?: boolean | Prisma.WebsiteDefaultArgs<ExtArgs>
@@ -526,7 +423,6 @@ export type RegionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type $RegionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Region"
   objects: {
-    websiteTick: Prisma.$WebsiteTickPayload<ExtArgs>[]
     website: Prisma.$WebsitePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -927,7 +823,6 @@ readonly fields: RegionFieldRefs;
  */
 export interface Prisma__RegionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  websiteTick<T extends Prisma.Region$websiteTickArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Region$websiteTickArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WebsiteTickPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   website<T extends Prisma.WebsiteDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WebsiteDefaultArgs<ExtArgs>>): Prisma.Prisma__WebsiteClient<runtime.Types.Result.GetResult<Prisma.$WebsitePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1354,30 +1249,6 @@ export type RegionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Regions to delete.
    */
   limit?: number
-}
-
-/**
- * Region.websiteTick
- */
-export type Region$websiteTickArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the WebsiteTick
-   */
-  select?: Prisma.WebsiteTickSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the WebsiteTick
-   */
-  omit?: Prisma.WebsiteTickOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.WebsiteTickInclude<ExtArgs> | null
-  where?: Prisma.WebsiteTickWhereInput
-  orderBy?: Prisma.WebsiteTickOrderByWithRelationInput | Prisma.WebsiteTickOrderByWithRelationInput[]
-  cursor?: Prisma.WebsiteTickWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.WebsiteTickScalarFieldEnum | Prisma.WebsiteTickScalarFieldEnum[]
 }
 
 /**

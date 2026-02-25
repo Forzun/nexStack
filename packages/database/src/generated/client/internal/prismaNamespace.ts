@@ -774,9 +774,8 @@ export const WebsiteTickScalarFieldEnum = {
   id: 'id',
   response_time: 'response_time',
   website_id: 'website_id',
-  region_id: 'region_id',
-  status: 'status',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  status: 'status'
 } as const
 
 export type WebsiteTickScalarFieldEnum = (typeof WebsiteTickScalarFieldEnum)[keyof typeof WebsiteTickScalarFieldEnum]

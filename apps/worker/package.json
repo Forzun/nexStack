@@ -2,7 +2,8 @@
   "name": "worker",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",  "scripts": {
+  "main": "index.js",
+  "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "dev": "ts-node src/index.ts",
@@ -13,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@workspace/database": "workspace:*",
+    "axios": "^1.13.5",
     "redis": "^5.11.0"
   },
   "packageManager": "pnpm@10.4.1",
