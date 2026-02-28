@@ -94,10 +94,10 @@ export function AnimatedBeamDemo() {
 
     return (
         <div
-            className="relative flex h-full w-full items-center justify-center overflow-hidden p-10"
+            className="relative flex h-full max-w-full items-center justify-center overflow-hidden p-10"
             ref={containerRef}
         >
-            <div className="flex size-full max-h-full max-w-lg flex-col items-stretch justify-between gap-10">
+            <div className="flex size-full h-full max-w-lg min-w-lg flex-col items-stretch justify-between gap-10">
                 <div className="flex flex-row items-center justify-between">
                     <Circle ref={div1Ref}>
                         <Icons.googleDrive />
@@ -110,7 +110,7 @@ export function AnimatedBeamDemo() {
                     <Circle ref={div2Ref}>
                         <Icons.notion />
                     </Circle>
-                    <Circle ref={div4Ref} className="min-w-44 min-h-24 overflow-hidden rounded-xl">
+                    <Circle ref={div4Ref} className="min-w-40 min-h-20 overflow-hidden rounded-xl p-2">
                         <motion.div
                             key={currentIndex}
                             initial={{ y: animating ? 0 : 40, opacity: animating ? 1 : 0, scale: animating ? 1 : 0 }}
@@ -120,7 +120,7 @@ export function AnimatedBeamDemo() {
                                 delay: 0.1,
                                 ease: "easeInOut",
                             }}
-                            className={`relative border w-full h-full p-3 flex gap-3 items-center rounded-xl shadow-[0_0_20px_-12px_rgba(0,0,0,0.5)] bg-neutral-100"
+                            className={`relative border bg-neutral-100/20 w-full h-full p-3 flex gap-3 items-center rounded-xl shadow-[0_0_20px_-12px_rgba(0,0,0,0.5)] bg-neutral-100"
                                 }`}
                         >
                             <div className="text-sm font-bold w-9 h-9 flex items-center justify-center rounded-lg border shadow-sm shrink-0 transition-colors duration-300">

@@ -1,17 +1,20 @@
 import { Button } from "@workspace/ui/components/button"
 import { ChartNoAxesCombined } from "lucide-react"
 import { AnimatedBeamDemo } from "../custom/hero-beam"
+import { DotBackgroundDemo } from "../custom/landing-bg"
 
 export default function HeroPage() {
 
     return <div className="min-h-screen">
         <Navbar />
         <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
-            {/* <h1 className="text-7xl font-extrabold text-neutral-600 tracking-tighter">NexStack</h1>
-            <p className="text-base text-neutral-500">NexStack is a platform for developers to share their code and projects.</p> */}
+            <h1 className="text-7xl font-extrabold text-neutral-600 tracking-tighter">NexStack</h1>
+            <p className="text-base text-neutral-500">NexStack is a platform for developers to share their code and projects.</p>
 
             <div className="w-full h-full">
-                <AnimatedBeamDemo />
+                <DotBackgroundDemo>
+                    <AnimatedBeamDemo />
+                </DotBackgroundDemo>
             </div>
         </div>
     </div>
@@ -19,7 +22,7 @@ export default function HeroPage() {
 
 function Navbar() {
 
-    return <nav className="max-w-4xl mx-auto px-3 py-2 border-b-2 border-neutral-300/40 text-sm text-gray-950 dark:text-gray-50">
+    return <nav className="max-w-4xl mx-auto px-3 py-2 border-b-2 border-neutral-300/40 text-sm bg-white bg-transparent text-gray-950 dark:text-gray-50">
         <div className="flex justify-between items-center text-neutral-500 text-sm font-light">
             <div className="flex items-center justify-center gap-5 text-sm">
                 <div className="flex items-center justify-center gap-1">
