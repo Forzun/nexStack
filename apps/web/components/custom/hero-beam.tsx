@@ -93,7 +93,10 @@ export function AnimatedBeamDemo() {
     const isUp = site.status === "up"
 
     return (
-        <div
+        <motion.div
+            initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 1.3, ease: "easeInOut" }}
             className="relative flex h-full max-w-full items-center justify-center overflow-hidden p-10"
             ref={containerRef}
         >
@@ -113,8 +116,8 @@ export function AnimatedBeamDemo() {
                     <Circle ref={div4Ref} className="min-w-40 min-h-20 overflow-hidden rounded-xl p-2">
                         <motion.div
                             key={currentIndex}
-                            initial={{ y: animating ? 0 : 40, opacity: animating ? 1 : 0, scale: animating ? 1 : 0 }}
-                            animate={{ y: animating ? -40 : 0, opacity: animating ? 0 : 1, scale: animating ? 0 : 1 }}
+                            initial={{ y: animating ? 0 : 40, opacity: animating ? 1 : 0, scale: animating ? 1 : 0 , filter: animating ? "blur(0px)" : "blur(10px)" }}
+                            animate={{ y: animating ? -40 : 0, opacity: animating ? 0 : 1, scale: animating ? 0 : 1 , filter: animating? "blur(10px)" : "blur(0px)" }}
                             transition={{
                                 duration: 0.6,
                                 delay: 0.1,
@@ -138,7 +141,7 @@ export function AnimatedBeamDemo() {
                                         {isUp ? "Up" : "Down"}
                                     </motion.span>
                                 </p>
-                            </div> 
+                            </div>
                         </motion.div>
                     </Circle>
                     <Circle ref={div6Ref}>
@@ -196,7 +199,7 @@ export function AnimatedBeamDemo() {
                 endYOffset={10}
                 reverse
             />
-        </div>
+        </motion.div>
     )
 }
 

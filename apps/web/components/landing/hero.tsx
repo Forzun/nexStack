@@ -1,28 +1,27 @@
+"use client"
 import { Button } from "@workspace/ui/components/button"
 import { ChartNoAxesCombined } from "lucide-react"
 import { AnimatedBeamDemo } from "../custom/hero-beam"
-import { DotBackgroundDemo } from "../custom/landing-bg"
+import { motion } from "framer-motion"
 
 export default function HeroPage() {
 
     return <div className="min-h-screen">
         <Navbar />
         <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
-            <h1 className="text-7xl font-extrabold text-neutral-600 tracking-tighter">NexStack</h1>
-            <p className="text-base text-neutral-500">NexStack is a platform for developers to share their code and projects.</p>
+            <motion.h1 initial={{ opacity: 0, y: 30, filter: "blur(10px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.5, ease: "easeInOut" }} className="text-7xl font-extrabold text-neutral-700 tracking-tighter flex items-center gap-3">Datadog for people </motion.h1>
+            <motion.p initial={{ opacity: 0, y: 30, filter: "blur(10px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 1, ease: "easeInOut" }} className="text-3xl text-neutral-600">who check their AWS bill</motion.p>
 
-            <div className="w-full h-full">
-                <DotBackgroundDemo>
-                    <AnimatedBeamDemo />
-                </DotBackgroundDemo>
+            <div className="w-full h-full mt-20">
+                <AnimatedBeamDemo />
             </div>
         </div>
-    </div>
+    </div >
 }
 
 function Navbar() {
 
-    return <nav className="max-w-4xl mx-auto px-3 py-2 border-b-2 border-neutral-300/40 text-sm bg-white bg-transparent text-gray-950 dark:text-gray-50">
+    return <nav className="max-w-4xl mx-auto px-3 py-2 border-b-2 border-neutral-300/40 text-sm bg-white text-gray-950 dark:text-gray-50">
         <div className="flex justify-between items-center text-neutral-500 text-sm font-light">
             <div className="flex items-center justify-center gap-5 text-sm">
                 <div className="flex items-center justify-center gap-1">
