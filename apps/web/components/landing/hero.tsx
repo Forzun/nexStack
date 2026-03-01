@@ -3,6 +3,7 @@ import { Button } from "@workspace/ui/components/button"
 import { ChartNoAxesCombined } from "lucide-react"
 import { AnimatedBeamDemo } from "../custom/hero-beam"
 import { motion } from "framer-motion"
+import { useRouter } from "next/navigation"
 
 export default function HeroPage() {
 
@@ -20,6 +21,7 @@ export default function HeroPage() {
 }
 
 function Navbar() {
+    const router = useRouter();
 
     return <nav className="max-w-4xl mx-auto px-3 py-2 border-b-2 border-neutral-300/40 text-sm bg-white text-gray-950 dark:text-gray-50">
         <div className="flex justify-between items-center text-neutral-500 text-sm font-light">
@@ -34,8 +36,8 @@ function Navbar() {
                 </div>
             </div>
             <div className="flex items-center justify-end gap-1">
-                <Button variant={"ghost"} className="text-sm text-neutral-500 hover:bg-transparent hover:text-neutral-700 dark:hover:text-neutral-50">Sign in</Button>
-                <Button variant={"outline"} className="text-sm text-neutral-500 py-2 px-3 font-semibold hover:text-neutral-700 dark:hover:text-neutral-50 shadow-[0_2px_3px_-1px_theme(colors.black/0.08),0_0_0_0.5px_theme(colors.gray.950/0.18),0_1px_0_0_theme(colors.white/0.10)_inset] [background:linear-gradient(180deg,rgba(19,19,22,0)_45%,rgba(19,19,22,0.03)_55%),#fff] dark:text-gray-50  ">Sign up</Button>
+                <Button onClick={() => router.push("/signin")} variant={"ghost"} className="text-sm text-neutral-500 hover:bg-transparent hover:text-neutral-700 dark:hover:text-neutral-50">Sign in</Button>
+                <Button onClick={() => router.push("/signup")} variant={"outline"} className="text-sm text-neutral-500 py-2 px-3 font-semibold hover:text-neutral-700 dark:hover:text-neutral-50 shadow-[0_2px_3px_-1px_theme(colors.black/0.08),0_0_0_0.5px_theme(colors.gray.950/0.18),0_1px_0_0_theme(colors.white/0.10)_inset] [background:linear-gradient(180deg,rgba(19,19,22,0)_45%,rgba(19,19,22,0.03)_55%),#fff] dark:text-gray-50  ">Sign up</Button>
             </div>
         </div>
     </nav>
