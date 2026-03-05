@@ -28,7 +28,7 @@ export default function RootLayout({
       <body
         className={`${hankenGrotesk.className} antialiased `}
       >
-        <Providers>{children}</Providers>
+        {children}
       </body>
     </html>
   )
