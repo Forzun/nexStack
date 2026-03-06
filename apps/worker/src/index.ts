@@ -3,7 +3,7 @@ import {createClient } from "redis"
 import axios from "axios";
 import { prisma } from "@workspace/database"
 
-const CONSUMER_GROUP_NAME='us';
+const CONSUMER_GROUP_NAME='India';
 const STREAM_KEY='nexstack:website';
 const REGION_ID = '1'
 
@@ -18,6 +18,8 @@ type message = {
 const client = createClient();
 
 async function main(){ 
+
+    
 try{
     client.connect()
     client.on("error", (error) => console.log("redis error", error))
@@ -35,6 +37,7 @@ try{
     }
     
     const response = await xReadGroup(CONSUMER_GROUP_NAME , '1');
+    console.log("xReadGroup response here", response)
 
     const promises = response.map(({message}) => { 
         return new Promise<void>((resolve , reject ) => {
@@ -45,7 +48,7 @@ try{
             websiteId, 
             websiteUrl
         })
-        axios.get('https://google.com')
+        axios.get(websiteUrl)
             .then(async() =>  {
                 console.log("atlest once")
                 const endTime = Date.now() 
