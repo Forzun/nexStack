@@ -2,6 +2,8 @@ import { Geist, Geist_Mono, Hanken_Grotesk } from "next/font/google"
 
 import "@workspace/ui/globals.css"
 import { Providers } from "@/components/providers"
+import { TooltipProvider } from "@workspace/ui/components/tooltip";
+import { ThemeProvider } from "next-themes";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -28,7 +30,16 @@ export default function RootLayout({
       <body
         className={`${hankenGrotesk.className} antialiased `}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TooltipProvider>
+            {children}
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
