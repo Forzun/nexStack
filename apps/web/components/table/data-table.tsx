@@ -62,6 +62,7 @@ export function DataTable<TData, TValue>({
       rowSelection
     }
   })
+  
 
   return (
     <div>

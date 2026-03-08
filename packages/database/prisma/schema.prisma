@@ -42,6 +42,6 @@ model WebsiteTick {
 
 enum WebsiteRegion { 
   UP 
-  DOWN 
+  DOWN
   UNKNOWN
 }

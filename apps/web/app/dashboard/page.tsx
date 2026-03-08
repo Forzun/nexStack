@@ -1,30 +1,35 @@
+"use client";
 import { AppSidebar } from "@/components/app-sidebar"
 import { ChartAreaInteractive } from "@/components/chart-area-interactive"
 import { SectionCards } from "@/components/section-cards"
 import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@workspace/ui/components/sidebar"
 import { DataTable } from "../../components/table/data-table"
-// import data from "./data.json"
 import { WebsiteInfo, columns } from "@/components/table/columns"
+import { timeAgo } from "@/utils/time-ago"
+import axios from "axios"
+import { useEffect } from "react";
+import { useWebsite } from "@/hooks/useWebsites";
 
+// async function getData(): Promise<WebsiteInfo[]>{ 
+//   const date = timeAgo("Sat Mar 07 2026 11:31:45 GMT+0530 (India Standard Time)")
 
-async function getData(): Promise<WebsiteInfo[]>{ 
+//   return[ 
+//     { 
+//       id: "1",
+//       name:"google.com", 
+//       status: "UNKNOWN",
+//       active: true, 
+//       createAt: date,
+//       ms:"100"
+//     }
+//   ]
+// }
 
-  return[ 
-    { 
-      id: "1",
-      name:"google.com", 
-      status: "UP",
-      active: true, 
-      createAt:new Date(),
-      ms:"100"
-    }
-  ]
-}     
+export default function Page() { 
+  const { websites } = useWebsite();
+  console.log(websites)
 
-export default async function Page() { 
-  const data = await getData();
-  
   return (
     <SidebarProvider
       style={
@@ -45,7 +50,7 @@ export default async function Page() {
                 <ChartAreaInteractive />
               </div>
                 <div className="px-4 lg:px-6">
-                 <DataTable data={data} columns={columns} />
+                 <DataTable data={websites} columns={columns} />
                 </div>
             </div>
           </div>

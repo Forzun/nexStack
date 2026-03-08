@@ -4,11 +4,13 @@ import { AuthInput } from "./shared/types/user.types.js";
 import jwt from "jsonwebtoken";
 import { prisma } from "@workspace/database";
 import { authMiddleware } from "./middleware/auth.js";
+import cors from "cors"
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
-app.post("/website", authMiddleware, async (req, res) => {
+app.post("/create/website", authMiddleware, async (req, res) => {
   try {
     if (!req.body) {
       res.status(411).json({
@@ -87,7 +89,6 @@ app.post("/user/signup", async (req, res) => {
     if (existingUser) {
       res.status(409).json({
         message: "oops user already exist",
-        id: existingUser.id
       })
     }
 
@@ -104,7 +105,7 @@ app.post("/user/signup", async (req, res) => {
 
     return res.status(200).json({
       message: "successed!",
-      id: user.id
+      username: user.username, 
     })
 
   } catch (error) {
@@ -151,12 +152,47 @@ app.post("/user/signin", async (req, res) => {
     }, process.env.JWT_SECRET!)
 
     res.status(200).json({
-      token: token
+      token: token,
+      message: "successed!",
+      username: user.username, 
     })
   } catch (error) {
     res.status(403).send("wrong")
   }
 })
+
+app.get("/websites", authMiddleware , async(req ,res) => { 
+  try{ 
+    const response = await prisma.website.findMany({ 
+      where: {
+          user_id: req.userId
+      },include: {
+        tick: { 
+          orderBy: {
+            createdAt: "desc",
+          },
+          take: 1
+        }
+      }
+    })
+
+    if(response.length < 0){
+       return res.status(200).json({ 
+          message:"No website created yet", 
+          success: true,
+       })
+    } 
+
+    res.status(200).json({ 
+        data: response
+    })
+  }catch(error){
+    res.status(404).json({ 
+        error: error
+    })
+  }
+})
+
 
 
 app.listen(3000);
