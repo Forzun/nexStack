@@ -5,10 +5,7 @@ import { SectionCards } from "@/components/section-cards"
 import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@workspace/ui/components/sidebar"
 import { DataTable } from "../../components/table/data-table"
-import { WebsiteInfo, columns } from "@/components/table/columns"
-import { timeAgo } from "@/utils/time-ago"
-import axios from "axios"
-import { useEffect } from "react";
+import { columns } from "@/components/table/columns"
 import { useWebsite } from "@/hooks/useWebsites";
 
 // async function getData(): Promise<WebsiteInfo[]>{ 

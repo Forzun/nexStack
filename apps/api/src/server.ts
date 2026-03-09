@@ -1,8 +1,8 @@
 import "dotenv/config";
-import express from "express";
+import express, { response } from "express";
 import { AuthInput } from "./shared/types/user.types.js";
 import jwt from "jsonwebtoken";
-import { prisma } from "@workspace/database";
+import { Prisma, prisma } from "@workspace/database";
 import { authMiddleware } from "./middleware/auth.js";
 import cors from "cors"
 
@@ -190,6 +190,28 @@ app.get("/websites", authMiddleware , async(req ,res) => {
     res.status(404).json({ 
         error: error
     })
+  }
+})
+
+app.get("/websites/matrics", authMiddleware , async(req ,res) => {
+  try{ 
+    const extractDate = (d: string | Date) => new Date(d).toISOString().slice(0, 10);
+    
+    const userWebsite = await prisma.website.findMany({ 
+        where:{ 
+          user_id: req.userId
+        },
+        select:{ 
+          id: true
+        }
+    })
+
+    const websiteIds = userWebsite.map(w => w.id);
+
+    
+
+  }catch(error){
+    console.log(error)
   }
 })
 
