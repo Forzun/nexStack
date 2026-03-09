@@ -210,15 +210,16 @@ app.get("/websites/matrics", authMiddleware , async(req ,res) => {
       SELECT
       DATE("createdAt") as date,
       MIN(response_time) as min_ms,
-      MAX(response_time) as max_ms,
-      CAST(AVG(response_time) AS INT) AS avg_ms
+      MAX(response_time) as max_ms
       FROM "WebsiteTick"
       WHERE website_id IN (${Prisma.join(websiteIds)})
       GROUP BY DATE("createdAt")
       ORDER BY date;
     `;
 
-    res.send(matrics);
+    res.status(200).json({
+      matrics
+    })
   }catch(error){
     console.log(error)
   }
