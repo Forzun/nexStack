@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { Prisma, prisma } from "@workspace/database";
 import { authMiddleware } from "./middleware/auth.js";
 import cors from "cors"
+import { object } from "zod/v4";
 
 const app = express();
 app.use(express.json());
@@ -201,15 +202,23 @@ app.get("/websites/matrics", authMiddleware , async(req ,res) => {
         where:{ 
           user_id: req.userId
         },
-        select:{ 
-          id: true
-        }
     })
 
     const websiteIds = userWebsite.map(w => w.id);
 
-    
+    const matrics = await prisma.$queryRaw`
+      SELECT
+      DATE("createdAt") as date,
+      MIN(response_time) as min_ms,
+      MAX(response_time) as max_ms,
+      CAST(AVG(response_time) AS INT) AS avg_ms
+      FROM "WebsiteTick"
+      WHERE website_id IN (${Prisma.join(websiteIds)})
+      GROUP BY DATE("createdAt")
+      ORDER BY date;
+    `;
 
+    res.send(matrics);
   }catch(error){
     console.log(error)
   }
