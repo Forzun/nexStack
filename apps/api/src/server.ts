@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { Prisma, prisma } from "@workspace/database";
 import { authMiddleware } from "./middleware/auth.js";
 import cors from "cors"
-import { object } from "zod/v4";
+import { date, object } from "zod/v4";
 
 const app = express();
 app.use(express.json());
@@ -225,6 +225,49 @@ app.get("/websites/matrics", authMiddleware , async(req ,res) => {
   }
 })
 
+
+app.get("/dashboard/status" , authMiddleware , async(req ,res) => { 
+  try{
+    const TotalWebsites = await prisma.website.findMany({ 
+      where:{ 
+        user_id: req.userId
+      },
+      select: { 
+        tick: true
+      }
+    })
+
+    let upCount = 0;
+    let totalCheck = 0;
+    let inActive = 0;
+    const website = TotalWebsites.length;
+    const responseTime:number[] = [];
+
+    TotalWebsites.map(ticks => {
+        ticks.tick.map(data => {
+          if(data.status == "UP"){ 
+             upCount++;
+          }else{ 
+            inActive++;
+          }
+          totalCheck++;
+          responseTime.push(data.response_time)
+        })
+    })
+
+    let avgResponse =Math.floor(responseTime.reduce((a, b) => a + b) / responseTime.length);
+    const upTime = (upCount / totalCheck) * 100;
+
+    res.json({ 
+      website: website,
+      upTime: upTime, 
+      avgResponse: avgResponse, 
+      inActive: inActive
+    })
+  }catch(error){
+    console.error(error)
+  }
+})
 
 
 app.listen(3000);

@@ -150,9 +150,9 @@ export function ChartAreaInteractive() {
               }}
             />
             <Tooltip
-  content={<CustomTooltip />}
-  cursor={{ stroke: "var(--border)", strokeWidth: 1, strokeDasharray: "4 4" }}
-/>
+              content={<CustomTooltip />}
+              cursor={{ stroke: "var(--border)", strokeWidth: 1, strokeDasharray: "4 4" }}
+            />
             <YAxis
               tickLine={false}
               axisLine={false}
