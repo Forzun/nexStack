@@ -207,15 +207,15 @@ app.get("/websites/matrics", authMiddleware , async(req ,res) => {
     const websiteIds = userWebsite.map(w => w.id);
 
     const matrics = await prisma.$queryRaw`
-      SELECT
-      DATE("createdAt") as date,
+    SELECT
+      TO_CHAR("createdAt", 'YYYY-MM-DD') as date,
       MIN(response_time) as min_ms,
       MAX(response_time) as max_ms
-      FROM "WebsiteTick"
-      WHERE website_id IN (${Prisma.join(websiteIds)})
-      GROUP BY DATE("createdAt")
-      ORDER BY date;
-    `;
+    FROM "WebsiteTick"
+    WHERE website_id IN (${Prisma.join(websiteIds)})
+    GROUP BY TO_CHAR("createdAt", 'YYYY-MM-DD')
+    ORDER BY date;
+  `
 
     res.status(200).json({
       matrics
@@ -255,10 +255,12 @@ app.get("/dashboard/status" , authMiddleware , async(req ,res) => {
         })
     })
 
-    let avgResponse =Math.floor(responseTime.reduce((a, b) => a + b) / responseTime.length);
+    const avgResponse = responseTime.length > 0
+    ? Math.floor(responseTime.reduce((a, b) => a + b, 0) / responseTime.length)
+    : 0;
     const upTime = (upCount / totalCheck) * 100;
 
-    res.json({ 
+    res.status(200).json({ 
       website: website,
       upTime: upTime, 
       avgResponse: avgResponse, 

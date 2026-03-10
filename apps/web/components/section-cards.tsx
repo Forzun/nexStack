@@ -1,5 +1,6 @@
 "use client"
 
+import { useWebsite } from "@/hooks/useWebsites"
 import { Badge } from "@workspace/ui/components/badge"
 import {
   Card,
@@ -10,24 +11,20 @@ import {
   CardTitle,
 } from "@workspace/ui/components/card"
 import { TrendingUpIcon, TrendingDownIcon, Radio } from "lucide-react"
-
-interface StatusCard { 
-    websites: number; 
-    upTime: number; 
-    inActive: number; 
-    avgResponse: number
-}
+import { NumberTicker } from "./custom/Number-Ticker"
 
 export function SectionCards() {
+  const {dashboardStatus} = useWebsite()
+
   return (
     <div className="grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4 dark:*:data-[slot=card]:bg-card">
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Total websites</CardDescription>
           <div className="flex gap-1 items-center content-center">
-            {/* <Radio /> */}
+            <Radio />
             <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-              10
+            <NumberTicker value={dashboardStatus.websites} />
             </CardTitle>
           </div>
           <CardAction>
@@ -39,11 +36,11 @@ export function SectionCards() {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            10 Website this month{" "}
+          Monitoring 10 active websites{" "}
             <TrendingUpIcon className="size-4" />
           </div>
           <div className="text-muted-foreground">
-            Check in every 3 minutes
+          Checked every 3 minutes
           </div>
         </CardFooter>
       </Card>
@@ -51,7 +48,7 @@ export function SectionCards() {
         <CardHeader>
           <CardDescription>Up Time</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            1,234
+            <NumberTicker value={dashboardStatus.upTime} />%
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
@@ -63,19 +60,19 @@ export function SectionCards() {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Down 20% this period{" "}
-            <TrendingDownIcon className="size-4" />
+            Overall uptime across all websites{" "}
+            <TrendingUpIcon className="size-4" />
           </div>
           <div className="text-muted-foreground">
-            Acquisition needs attention
+            Based on latest health checks
           </div>
         </CardFooter>
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Active Accounts</CardDescription>
+          <CardDescription>In Active</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            45,678
+          <NumberTicker startValue={50} value={dashboardStatus.inActive} />%
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
@@ -87,17 +84,17 @@ export function SectionCards() {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Strong user retention{" "}
+          Average server response time{" "}
             <TrendingUpIcon className="size-4" />
           </div>
-          <div className="text-muted-foreground">Engagement exceed targets</div>
+          <div className="text-muted-foreground">Calculated from recent checks</div>
         </CardFooter>
       </Card>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Growth Rate</CardDescription>
+          <CardDescription>Average Response</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            4.5%
+          <NumberTicker value={dashboardStatus.avgResponse} />ms
           </CardTitle>
           <CardAction>
             <Badge variant="outline">

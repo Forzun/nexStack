@@ -2,8 +2,6 @@
 export function timeAgo(dateString: string) {
     const date = new Date(dateString);
     const now = new Date()
-    console.log("date;", date)
-    console.log("now:", now)
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
     const intervals = {

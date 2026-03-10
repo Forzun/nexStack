@@ -1,7 +1,7 @@
 import { WebsiteInfo } from "@/components/table/columns";
 import { isoString, timeAgo } from "@/utils/time-ago";
 import axios from "axios";
-import { cache, useEffect, useEffectEvent, useState } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
 
 interface ResponseDate {
     id: string;
@@ -22,18 +22,22 @@ interface WebsiteChartData {
     min: number
 }
 
+interface StatusCard { 
+    websites: number;
+    upTime: number;
+    inActive: number;
+    avgResponse: number
+}
+
 export function useWebsite() {
     const [websites, setWebsites] = useState<WebsiteInfo[]>([]);
-    const [chartData, setChartData] = useState<WebsiteChartData[]>([
-        { date: "2026-03-08", max: 180, min: 80 },
-        { date: "2026-03-09", max: 220, min: 110 },
-        { date: "2026-03-10", max: 195, min: 90 },
-        { date: "2026-03-11", max: 240, min: 130 },
-        { date: "2026-03-12", max: 170, min: 75 },
-        { date: "2026-03-13", max: 260, min: 140 },
-        { date: "2026-03-14", max: 210, min: 100 },
-        { date: "2026-03-15", max: 500, min: 120 },
-    ]);
+    const [dashboardStatus , setDashboardStatus] = useState<StatusCard>({ 
+        websites: 0,
+        upTime: 0,
+        inActive: 0,
+        avgResponse: 0
+    }) 
+    const [chartData, setChartData] = useState<WebsiteChartData[]>([]);
     const [loading, setLoading] = useState(false);
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
@@ -130,22 +134,57 @@ export function useWebsite() {
             if (!response) {
                 console.log("something wrong with matrics route")
             }
-            console.log(response.data.matrics)
-            setChartData(response.data.matrics)
+            setChartData(
+                response.data.matrics.map((m: {
+                    date: string, 
+                    max_ms: number, 
+                    min_ms: number
+                }) => ({ 
+                    date: m.date,
+                    max: m.max_ms,
+                    min: m.min_ms,
+                }))
+            )
         } catch (error) {
+            console.error(error)
+        }
+    })
+
+    const getDashboardStatus = useEffectEvent(async () => { 
+        try{ 
+            const websitesStatus = await axios.get("http://localhost:3000/dashboard/status", 
+                {
+                    headers:{ 
+                        Authorization: token
+                    }
+                }
+            );
+
+            if(!websitesStatus){
+                console.error("dashboard data in not loaded yet", websitesStatus);
+            }
+            setDashboardStatus({
+                websites: websitesStatus.data.website,
+                upTime: websitesStatus.data.upTime, 
+                avgResponse: websitesStatus.data.avgResponse, 
+                inActive: websitesStatus.data.inActive
+            })
+        }catch(error){
             console.error(error)
         }
     })
 
     useEffect(() => {
         void getAllWebsite();
-        // void getWebsiteMatrics();
+        void getWebsiteMatrics();
+        void getDashboardStatus();
     }, []);
 
     return {
         websites,
         loading,
         chartData,
+        dashboardStatus,
         singleWebsite,
         createWebsite
     };

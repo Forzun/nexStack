@@ -50,8 +50,6 @@ export function ChartAreaInteractive() {
   const [timeRange, setTimeRange] = React.useState("90d")
   const { chartData } = useWebsite()
 
-  console.log("chart data:", chartData)
-
   React.useEffect(() => {
     if (isMobile) {
       setTimeRange("7d")
