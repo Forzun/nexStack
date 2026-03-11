@@ -43,6 +43,7 @@ export function useWebsite() {
 
     const createWebsite = async (url: string) => {
         try {
+            setLoading(true)
             const response = await axios.post("http://localhost:3000/create/website", {
                 url: url
             }, {
@@ -59,6 +60,7 @@ export function useWebsite() {
 
             setWebsites(prev => [...prev, website])
             console.log(response.data.website)
+            setLoading(false)
         } catch (error) {
             console.error(error)
         }
