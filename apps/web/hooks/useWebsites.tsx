@@ -43,7 +43,6 @@ export function useWebsite() {
 
     const createWebsite = async (url: string) => {
         try {
-            setLoading(true)
             const response = await axios.post("http://localhost:3000/create/website", {
                 url: url
             }, {
@@ -52,15 +51,12 @@ export function useWebsite() {
                 }
             })
 
-            const website = response.data.website
-
+            const website = response.data
             if (!website) {
                 return console.log("website creation faild");
             }
-
             setWebsites(prev => [...prev, website])
-            console.log(response.data.website)
-            setLoading(false)
+            return true; 
         } catch (error) {
             console.error(error)
         }
@@ -93,30 +89,30 @@ export function useWebsite() {
                 },
             });
 
+            if(!response){ 
+                return;
+            }
 
-            let active: boolean;
+            let active: boolean = true 
             response.data.data.map((website: ResponseDate) => {
 
                 const latestTick = website.tick?.[0];
-
-                if (latestTick?.status === "UNKNOWN" || !latestTick) {
-                    active = false
-                } else {
-                    active = true
-                }
-
-                const dateOnly = isoString(String(website.time_added))
-                const lastCheck = timeAgo(String(latestTick?.createdAt))
-
-                setWebsites(prev => [...prev, {
-                    id: website.id,
-                    name: website.url,
-                    createAt: dateOnly,
-                    active: active ?? false,
-                    status: latestTick?.status ?? "UNKNOWN",
-                    response: String(latestTick?.response_time ?? "0"),
-                    lastCheck: lastCheck
-                }])
+                    if (latestTick?.status == "UNKNOWN" || !latestTick) {
+                        active = false
+                    }
+    
+                    const dateOnly = isoString(String(website.time_added))
+                    const lastCheck = timeAgo(String(latestTick?.createdAt))
+    
+                    setWebsites(prev => [...prev, {
+                        id: website.id,
+                        name: website.url,
+                        createAt: dateOnly,
+                        active: active,
+                        status: latestTick?.status ?? "UNKNOWN",
+                        response: String(latestTick?.response_time ?? "0"),
+                        lastCheck: lastCheck
+                    }])
             })
         } catch (error) {
             console.error(error);

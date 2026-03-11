@@ -1,30 +1,57 @@
+"use client"
 import { Button } from "@workspace/ui/components/button"
 import { DialogTrigger , DialogHeader , DialogTitle , DialogContent , DialogDescription, DialogFooter, DialogClose, Dialog} from "@workspace/ui/components/dialog";
-import { Field, FieldError, FieldGroup, FieldLabel } from "@workspace/ui/components/field";
+import { Field, FieldError, FieldGroup } from "@workspace/ui/components/field";
 import * as z from "zod"
 import {Controller, useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {InputGroup, InputGroupAddon, InputGroupInput, InputGroupText} from "@workspace/ui/components/input-group"
-import { AlertCircleIcon, Plus } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@workspace/ui/components/alert"
+import { AlertCircleIcon, Loader2Icon, Plus } from "lucide-react";
+import { Alert, AlertDescription } from "@workspace/ui/components/alert"
+import { useState } from "react";
+import { useWebsite } from "@/hooks/useWebsites";
+import { toast } from "sonner";
 
 const formSchema = z.object({ 
   url: z.string().min(5, "url but be at least 5 characters"), 
 })
 
 export default function WebsiteDialog(){   
+  const [open , setOpen] = useState(false);
+  const [loading , setloading] = useState(false);
+  const { createWebsite } = useWebsite()
+
 const form = useForm<z.infer<typeof formSchema>>({ 
     resolver: zodResolver(formSchema),
     defaultValues: {
       url:"",
     }
 })
-    function onSubmit(data: z.infer<typeof formSchema>){ 
+    async function onSubmit(data: z.infer<typeof formSchema>){ 
+      setloading(true);
+      try{ 
+        const url = 'https://'+data.url;
+        if(!url){
+          return;
+        }      
+        console.log(url)
+        const response = await createWebsite(url)
 
-      console.log(data);
+        if(!response){ 
+          toast.error("faild add new site please again check the url")
+          return;
+        }
+
+        toast.success(`site added successfully`)
+        console.log(data)
+      }catch(error){
+        console.error(error)
+      }finally{ 
+        setOpen(false)
+      }
     }
 
-    return (<Dialog>
+    return (<Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">Add Website <Plus /></Button>
       </DialogTrigger>
@@ -75,7 +102,9 @@ const form = useForm<z.infer<typeof formSchema>>({
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
-            <Button type="submit">Save changes</Button>
+            <Button disabled={loading} type="submit">
+              {loading ? (<Loader2Icon className="size-4 animate-spin transition-all ease-in duration-300 " />) :  <span>add</span>}
+            </Button>
         </DialogFooter>
     </form>
       </DialogContent>

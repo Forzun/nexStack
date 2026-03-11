@@ -4,6 +4,7 @@ import "@workspace/ui/globals.css"
 import { Providers } from "@/components/providers"
 import { TooltipProvider } from "@workspace/ui/components/tooltip";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider>
+            <Toaster theme="system" />
             {children}
           </TooltipProvider>
         </ThemeProvider>

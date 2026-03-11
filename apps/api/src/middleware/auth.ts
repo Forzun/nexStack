@@ -11,10 +11,9 @@ export function authMiddleware(req:Request , res:Response , next:NextFunction) {
 
     const token = authHeader.startsWith("Bearer") ? authHeader.slice(7) : authHeader;
 
-    console.log("here is token", token)
     try{
         const response = jwt.verify(token , process.env.JWT_SECRET!) as { 
-            sb: string
+            sub: string
         };
 
         if(!response){
@@ -22,7 +21,8 @@ export function authMiddleware(req:Request , res:Response , next:NextFunction) {
             return;
         }
 
-        req.userId = response.sb;
+
+        req.userId = response.sub;
         next();
     }catch(error){
         res.status(209).json({error: "authentication failed"})

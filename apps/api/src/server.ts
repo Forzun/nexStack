@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 import { Prisma, prisma } from "@workspace/database";
 import { authMiddleware } from "./middleware/auth.js";
 import cors from "cors"
-import { date, object } from "zod/v4";
 
 const app = express();
 app.use(express.json());
@@ -17,9 +16,8 @@ app.post("/create/website", authMiddleware, async (req, res) => {
       res.status(411).json({
         error: "data is not vaild"
       });
-      return
+      return;
     }
-    console.log("data pase here", { url: req.body.url, userId: req.userId })
 
     const website = await prisma.website.create({
       data: {
@@ -29,12 +27,14 @@ app.post("/create/website", authMiddleware, async (req, res) => {
       }
     })
 
-    res.status(201).json(website);
+    res.status(201).json({ 
+      website: website
+    });
   } catch (error) {
     console.error("Create website error:", error);
-
     res.status(500).json({
-      error: "Failed to create website"
+      error: "Failed to create website",
+      message: error
     });
   }
 })

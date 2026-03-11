@@ -49,7 +49,7 @@ try{
                         websiteUrl
                     })
                     const startTime = Date.now();
-                        apiClient.head(`https://${websiteUrl}` , { 
+                        apiClient.head(`${websiteUrl}` , { 
                             timeout: 5000
                         })
                         .then(async() =>  {
