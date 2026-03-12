@@ -1,10 +1,9 @@
 import { Geist, Geist_Mono, Hanken_Grotesk } from "next/font/google"
-
 import "@workspace/ui/globals.css"
-import { Providers } from "@/components/providers"
 import { TooltipProvider } from "@workspace/ui/components/tooltip";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
+import { ViewTransitions } from "next-view-transitions";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -27,7 +26,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+  <ViewTransitions>  
+   <html lang="en" suppressHydrationWarning>
       <body
         className={`${hankenGrotesk.className} antialiased `}
       >
@@ -44,5 +44,6 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
+    </ViewTransitions>
   )
 }

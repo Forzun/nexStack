@@ -9,6 +9,8 @@ import {
   SidebarMenuItem,
 } from "@workspace/ui/components/sidebar"
 import { CirclePlusIcon, MailIcon } from "lucide-react"
+import { Link } from "next-view-transitions"
+import { usePathname } from "next/navigation"
 
 export function NavMain({
   items,
@@ -19,6 +21,10 @@ export function NavMain({
     icon?: React.ReactNode
   }[]
 }) {
+  const pathname = usePathname()
+  
+  console.log(pathname)
+
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -44,14 +50,19 @@ export function NavMain({
           </SidebarMenuItem>
         </SidebarMenu>
         <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
-                {item.icon}
-                <span>{item.title}</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          {items.map((item) => { 
+            const activeUrl = item.url === pathname
+            return (
+              <SidebarMenuItem key={item.title} className="mt-2">
+                <SidebarMenuButton tooltip={item.title} isActive={activeUrl}>
+                  <Link href={item.url} className="flex gap-2 items-center justify-center">
+                    {item.icon}
+                    <span>{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+          )
+          })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
