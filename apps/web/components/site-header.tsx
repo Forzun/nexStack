@@ -1,6 +1,8 @@
+"use client"
 import { Separator } from "@workspace/ui/components/separator"
 import { SidebarTrigger } from "@workspace/ui/components/sidebar"
 import WebsiteDialog from "./custom/dialog"
+import { Plus } from "lucide-react"
 
 export function SiteHeader() {
   return (
@@ -14,7 +16,7 @@ export function SiteHeader() {
         <h1 className="text-base font-medium">Documents</h1>
       </div>
       <div className="flex items-center gap-1 px-4 lg:gap-2 lg:px-6">
-        <WebsiteDialog />
+        <WebsiteDialog size={"default"} variant="outline" Icon={Plus} title="Add Website " />
       </div>
       </div>
     </header>

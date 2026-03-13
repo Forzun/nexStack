@@ -6,7 +6,7 @@ import * as z from "zod"
 import {Controller, useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {InputGroup, InputGroupAddon, InputGroupInput, InputGroupText} from "@workspace/ui/components/input-group"
-import { AlertCircleIcon, Loader2Icon, Plus } from "lucide-react";
+import { AlertCircleIcon, Loader2Icon, LucideIcon, Plus } from "lucide-react";
 import { Alert, AlertDescription } from "@workspace/ui/components/alert"
 import { useState } from "react";
 import { useWebsite } from "@/hooks/useWebsites";
@@ -16,7 +16,10 @@ const formSchema = z.object({
   url: z.string().min(5, "url but be at least 5 characters"), 
 })
 
-export default function WebsiteDialog(){   
+type variant = "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | "custom"
+type size = "default" | "xs" | "sm" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg" | "non" | null | undefined;
+
+export default function WebsiteDialog({title , variant , Icon , className , size }: {title?: string , variant: variant , Icon?: LucideIcon,   className?: string , size:size}){   
   const [open , setOpen] = useState(false);
   const [loading , setloading] = useState(false);
   const { createWebsite } = useWebsite()
@@ -53,7 +56,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 
     return (<Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Website <Plus /></Button>
+        <Button size={size} className={className} variant={variant}>{title}{Icon ? <Icon /> : ""}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-sm">
       <form  onSubmit={form.handleSubmit(onSubmit)}>

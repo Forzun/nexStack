@@ -94,7 +94,7 @@ export function useWebsite() {
             }
 
             let active: boolean = true 
-            response.data.data.map((website: ResponseDate) => {
+            const formatted = response.data.data.map((website: ResponseDate) => {
 
                 const latestTick = website.tick?.[0];
                     if (latestTick?.status == "UNKNOWN" || !latestTick) {
@@ -104,7 +104,7 @@ export function useWebsite() {
                     const dateOnly = isoString(String(website.time_added))
                     const lastCheck = timeAgo(String(latestTick?.createdAt))
     
-                    setWebsites(prev => [...prev, {
+                    return {
                         id: website.id,
                         name: website.url,
                         createAt: dateOnly,
@@ -112,8 +112,10 @@ export function useWebsite() {
                         status: latestTick?.status ?? "UNKNOWN",
                         response: String(latestTick?.response_time ?? "0"),
                         lastCheck: lastCheck
-                    }])
+                    }
             })
+
+            setWebsites(formatted)
         } catch (error) {
             console.error(error);
         } finally {

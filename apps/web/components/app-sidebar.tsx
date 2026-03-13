@@ -15,7 +15,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@workspace/ui/components/sidebar"
-import { LayoutDashboardIcon, ListIcon, CameraIcon, FileTextIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon } from "lucide-react"
+import { LayoutDashboardIcon, ListIcon, CameraIcon, FileTextIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon, House } from "lucide-react"
 import { Link } from "next-view-transitions"
 
 const data = {
@@ -29,8 +29,7 @@ const data = {
       title: "Home",
       url: "/dashboard/home",
       icon: (
-        <LayoutDashboardIcon
-        />
+      <House />
       ),
     },
     {
