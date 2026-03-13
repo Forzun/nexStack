@@ -21,6 +21,7 @@ import {
 import { useTheme } from "next-themes";
 import WebsiteDialog from "./dialog";
 import { Link } from "next-view-transitions";
+import { useEffect, useState } from "react";
 
 type CommandHeaderItems = { 
   name: string | React.ReactElement; 
@@ -55,9 +56,8 @@ const commandData:CommandItemData = {
   ],
 }
 
-export function CommandDemo() {
-  const { theme, setTheme } = useTheme();
-  const isDark = theme === "dark";  
+export function CommandDemo({isDark}: {isDark: boolean}) {
+  const { setTheme } = useTheme();
 
   const root = isDark
     ? "w-[480px] rounded-xl border border-neutral-800 bg-neutral-950 shadow-2xl"
@@ -143,14 +143,16 @@ export function CommandDemo() {
                 : <Moon className="h-3.5 w-3.5" />
               }
             </div>
-            <span>{isDark ? "Light mode" : "Dark mode"}</span>
-            <span className={`ml-auto text-[10px] font-mono px-1.5 py-0.5 rounded-full border ${
-              isDark
-                ? "border-neutral-700 text-neutral-500 bg-neutral-900"
-                : "border-neutral-200 text-neutral-400 bg-neutral-100"
-            }`}>
-              {isDark ? "dark" : "light"}
-            </span>
+            <div className="flex items-cneter gap-8">
+              <span className="flex justify-center items-center" >{isDark ? "Light mode" : "Dark mode"}</span>
+              <span className={`ml-50 text-[10px] font-mono px-1.5 py-0.5 flex rounded-full border ${
+                isDark
+                  ? "border-neutral-700 text-neutral-500 bg-neutral-900"
+                  : "border-neutral-200 text-neutral-400 bg-neutral-100"
+              }`}>
+                {isDark ? "dark" : "light"}
+              </span>
+            </div>
           </CommandItem>
 
           <CommandItem className={item}>

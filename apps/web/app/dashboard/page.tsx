@@ -7,7 +7,6 @@ import { useWebsite } from "@/hooks/useWebsites";
 
 export default function Page() {
   const { websites } = useWebsite();
-  console.log(websites)
 
   return (
         <div className="flex flex-1 flex-col">

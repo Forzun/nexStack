@@ -26,24 +26,24 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-  <ViewTransitions>  
-   <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${hankenGrotesk.className} antialiased `}
-      >
+        >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-        >
+          >
+          <ViewTransitions>  
           <TooltipProvider>
             <Toaster theme="system" />
             {children}
           </TooltipProvider>
+        </ViewTransitions>
         </ThemeProvider>
       </body>
     </html>
-    </ViewTransitions>
   )
 }

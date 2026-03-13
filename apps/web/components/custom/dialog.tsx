@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useWebsite } from "@/hooks/useWebsites";
 import { toast } from "sonner";
 
+
 const formSchema = z.object({ 
   url: z.string().min(5, "url but be at least 5 characters"), 
 })
@@ -37,7 +38,6 @@ const form = useForm<z.infer<typeof formSchema>>({
         if(!url){
           return;
         }      
-        console.log(url)
         const response = await createWebsite(url)
 
         if(!response){ 
@@ -46,7 +46,6 @@ const form = useForm<z.infer<typeof formSchema>>({
         }
 
         toast.success(`site added successfully`)
-        console.log(data)
       }catch(error){
         console.error(error)
       }finally{ 
@@ -54,7 +53,9 @@ const form = useForm<z.infer<typeof formSchema>>({
       }
     }
 
-    return (<Dialog open={open} onOpenChange={setOpen}>
+    return <div
+    className="w-full h-full flex items-center">
+      <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size={size} className={className} variant={variant}>{title}{Icon ? <Icon /> : ""}</Button>
       </DialogTrigger>
@@ -112,7 +113,7 @@ const form = useForm<z.infer<typeof formSchema>>({
     </form>
       </DialogContent>
     </Dialog>
-    )
+    </div>
 }
 
 

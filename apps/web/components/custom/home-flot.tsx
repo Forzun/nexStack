@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Activity, Globe, Wifi, Server, Shield, Zap, Radio } from "lucide-react";
+import { Globe,Shield, Radio } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@workspace/ui/components/card";
+import { useGetTheme } from "@/hooks/getTheme";
 import { useTheme } from "next-themes";
 
 const MiniBarChart = ({ bars = 7, dark = false }: { bars?: number; dark?: boolean }) => {
@@ -31,42 +32,20 @@ const MiniBarChart = ({ bars = 7, dark = false }: { bars?: number; dark?: boolea
   );
 };
 
-const MiniUptimeBar = ({ uptime = 99.9, dark = false }: { uptime: number; dark?: boolean }) => {
-  const [blocks, setBlocks] = useState<boolean[]>(() => Array.from({ length: 22 }, () => true));
-  useEffect(() => {
-    setBlocks(Array.from({ length: 22 }, () => Math.random() > (100 - uptime) / 100 + 0.89));
-  }, [uptime]);
 
-  return (
-    <div className="flex gap-[2px]">
-      {blocks.map((isUp, i) => (
-        <div
-          key={i}
-          className="h-[5px] w-[5px] rounded-[2px]"
-          style={{
-          background: isUp
-              ? dark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)"
-              : dark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)",
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
-const darkCard  = "bg-neutral-900  border-neutral-800  shadow-xl rounded-xl";
+const darkCard = "bg-neutral-900  border-neutral-800  shadow-xl rounded-xl";
 const lightCard = "bg-neutral-100  border-neutral-200  shadow-xl rounded-xl";
 
-const darkLabel  = "text-[10px] font-mono uppercase tracking-widest text-neutral-500";
+const darkLabel = "text-[10px] font-mono uppercase tracking-widest text-neutral-500";
 const lightLabel = "text-[10px] font-mono uppercase tracking-widest text-neutral-400";
 
-const darkValue  = "text-2xl font-mono font-bold text-neutral-100 tracking-tight";
+const darkValue = "text-2xl font-mono font-bold text-neutral-100 tracking-tight";
 const lightValue = "text-2xl font-mono font-bold text-neutral-800 tracking-tight";
 
-const darkSub  = "text-[11px] font-mono text-neutral-400";
+const darkSub = "text-[11px] font-mono text-neutral-400";
 const lightSub = "text-[11px] font-mono text-neutral-500";
 
-const darkMuted  = "text-[10px] font-mono text-neutral-600";
+const darkMuted = "text-[10px] font-mono text-neutral-600";
 const lightMuted = "text-[10px] font-mono text-neutral-400";
 
 const StatusCard = ({ title, url, ms, uptime, icon, dark = false }: any) => (
@@ -215,9 +194,7 @@ const WIDGETS = [
   },
 ];
 
-export default function FloatingBackground() {  
-  const theme = useTheme()
-  const active = theme.theme == 'dark'
+export default function FloatingBackground({active}: {active: boolean}) {
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -230,14 +207,14 @@ export default function FloatingBackground() {
           animate={{ opacity: 1, y: [0, -10, 0], scale: 1 }}
           transition={{
             opacity: { duration: 0.7, delay: w.delay },
-            scale:   { duration: 0.7, delay: w.delay },
+            scale: { duration: 0.7, delay: w.delay },
             y: { duration: w.duration, repeat: Infinity, ease: "easeInOut", delay: w.delay },
           }}
         >
-          {w.component === "status"   && <StatusCard     {...w.props} dark={active} />}
-          {w.component === "metric"   && <MetricCard     {...w.props} dark={active} />}
+          {w.component === "status" && <StatusCard     {...w.props} dark={active} />}
+          {w.component === "metric" && <MetricCard     {...w.props} dark={active} />}
           {w.component === "incident" && <IncidentCard   {...w.props} dark={active} />}
-          {w.component === "uptime"   && <UptimeRingCard {...w.props} dark={active} />}
+          {w.component === "uptime" && <UptimeRingCard {...w.props} dark={active} />}
         </motion.div>
       ))}
     </div>
