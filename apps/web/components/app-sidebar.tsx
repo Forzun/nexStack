@@ -15,7 +15,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@workspace/ui/components/sidebar"
-import { LayoutDashboardIcon, ListIcon, CameraIcon, FileTextIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon, House } from "lucide-react"
+import { LayoutDashboardIcon, ListIcon, CameraIcon, FileTextIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon, House, ChartNoAxesCombined } from "lucide-react"
 import { Link } from "next-view-transitions"
 
 const data = {
@@ -29,7 +29,7 @@ const data = {
       title: "Home",
       url: "/dashboard/home",
       icon: (
-      <House />
+        <House />
       ),
     },
     {
@@ -158,6 +158,9 @@ const data = {
       ),
     },
   ],
+  feature: [
+
+  ]
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -170,9 +173,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:p-1.5!"
             >
-              <Link href="#">
-                <CommandIcon className="size-5!" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+              <Link href="/dashboard" className="flex items-center justify-start">
+                <ChartNoAxesCombined className="size-5!" />
+                <span className="text-base font-semibold">NexStack</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -180,7 +183,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
+        <NavDocuments items={data.feature} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

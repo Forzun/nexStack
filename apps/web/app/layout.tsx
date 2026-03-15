@@ -29,19 +29,19 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${hankenGrotesk.className} antialiased `}
-        >
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-          >
-          <ViewTransitions>  
-          <TooltipProvider>
-            <Toaster theme="system" />
-            {children}
-          </TooltipProvider>
-        </ViewTransitions>
+        >
+          <ViewTransitions>
+            <TooltipProvider>
+              <Toaster theme="system" />
+              {children}
+            </TooltipProvider>
+          </ViewTransitions>
         </ThemeProvider>
       </body>
     </html>

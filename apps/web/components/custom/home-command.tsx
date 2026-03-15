@@ -23,41 +23,47 @@ import WebsiteDialog from "./dialog";
 import { Link } from "next-view-transitions";
 import { useEffect, useState } from "react";
 
-type CommandHeaderItems = { 
-  name: string | React.ReactElement; 
-  url?: string; 
+type CommandHeaderItems = {
+  name: string | React.ReactElement;
+  url?: string;
   icon: LucideIcon;
   disabled: boolean;
   onClick?: () => void
 }
 
 interface CommandItemData {
-  [header: string]:CommandHeaderItems[];
+  [header: string]: CommandHeaderItems[];
 }
 
-const commandData:CommandItemData = { 
+const commandData: CommandItemData = {
   Suggestions: [
     {
-      name:<WebsiteDialog size="non" variant="custom" title="Add Website " className="w-fit cursor-pointer flex text-xs pr-30 "/>,
-      icon: Plus, 
+      name: <WebsiteDialog size="non" variant="custom" title="Add Website " className="w-fit cursor-pointer flex text-xs pr-30 " />,
+      icon: Plus,
       disabled: false
     },
     {
-      name:"Dashboard",
-      url: "/dashboard", 
-      icon: LayoutDashboard, 
+      name: "Dashboard",
+      url: "/dashboard",
+      icon: LayoutDashboard,
       disabled: false
     },
-    { 
-      name: "LogOut", 
-      icon: LogOut, 
+    {
+      name: "LogOut",
+      icon: LogOut,
       disabled: true
-    }    
+    }
   ],
 }
 
-export function CommandDemo({isDark}: {isDark: boolean}) {
+export function CommandDemo() {
   const { setTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
+  const [isDark, setIsDark] = useState<boolean>(false)
+
+  useEffect(() => {
+    setIsDark(resolvedTheme === "dark");
+  }, [resolvedTheme])
 
   const root = isDark
     ? "w-[480px] rounded-xl border border-neutral-800 bg-neutral-950 shadow-2xl"
@@ -111,7 +117,7 @@ export function CommandDemo({isDark}: {isDark: boolean}) {
         </CommandEmpty>
 
         <CommandGroup heading={"Suggestions"} className={groupHeading}>
-        {commandData.Suggestions?.map((data , index) => ( 
+          {commandData.Suggestions?.map((data, index) => (
             <CommandItem key={index} className={item} disabled={data.disabled} >
               <div className={iconBox} >
                 <data.icon className="h-3.5 w-3.5" />
@@ -119,8 +125,8 @@ export function CommandDemo({isDark}: {isDark: boolean}) {
               <Link href={data.url ?? "/dashboard/home"}>
                 {data.name}
               </Link>
-          </CommandItem>
-        ))}
+            </CommandItem>
+          ))}
         </CommandGroup>
 
         <CommandSeparator className={separator} />
@@ -145,11 +151,10 @@ export function CommandDemo({isDark}: {isDark: boolean}) {
             </div>
             <div className="flex items-cneter gap-8">
               <span className="flex justify-center items-center" >{isDark ? "Light mode" : "Dark mode"}</span>
-              <span className={`ml-50 text-[10px] font-mono px-1.5 py-0.5 flex rounded-full border ${
-                isDark
-                  ? "border-neutral-700 text-neutral-500 bg-neutral-900"
-                  : "border-neutral-200 text-neutral-400 bg-neutral-100"
-              }`}>
+              <span className={`ml-50 text-[10px] font-mono px-1.5 py-0.5 flex rounded-full border ${isDark
+                ? "border-neutral-700 text-neutral-500 bg-neutral-900"
+                : "border-neutral-200 text-neutral-400 bg-neutral-100"
+                }`}>
                 {isDark ? "dark" : "light"}
               </span>
             </div>
