@@ -27,7 +27,7 @@ app.post("/create/website", authMiddleware, async (req, res) => {
       }
     })
 
-    res.status(201).json({ 
+    res.status(201).json({
       website: website
     });
   } catch (error) {
@@ -83,7 +83,7 @@ app.post("/user/signup", async (req, res) => {
 
     const existingUser = await prisma.user.findFirst({
       where: {
-        username: username, 
+        username: username,
         password: password
       }
     })
@@ -102,12 +102,12 @@ app.post("/user/signup", async (req, res) => {
       }
     })
 
-      console.log("user created successfully: ", user)
-      return res.status(200).json({
-        message: "user created successfully!",
-        username: user.username, 
-      })
-      
+    console.log("user created successfully: ", user)
+    return res.status(200).json({
+      message: "user created successfully!",
+      username: user.username,
+    })
+
   } catch (error) {
     const message = error instanceof Error ? error.message : "Something went wrong";
     res.status(403).send(message);
@@ -138,12 +138,16 @@ app.post("/user/signin", async (req, res) => {
     })
 
     if (!user) {
-      res.status(403).send("")
+      res.status(403).json({
+        message: "user not found please signup first!"
+      })
       return;
     }
 
     if (user.password != password) {
-      res.status(403).send("")
+      res.status(401).json({
+        message: "incorrect password"
+      })
       return;
     }
 
@@ -154,20 +158,20 @@ app.post("/user/signin", async (req, res) => {
     res.status(200).json({
       token: token,
       message: "successed!",
-      username: user.username, 
+      username: user.username,
     })
   } catch (error) {
     res.status(403).send("wrong")
   }
 })
 
-app.get("/websites", authMiddleware , async(req ,res) => { 
-  try{ 
-    const response = await prisma.website.findMany({ 
+app.get("/websites", authMiddleware, async (req, res) => {
+  try {
+    const response = await prisma.website.findMany({
       where: {
-          user_id: req.userId
-      },include: {
-        tick: { 
+        user_id: req.userId
+      }, include: {
+        tick: {
           orderBy: {
             createdAt: "desc",
           },
@@ -176,31 +180,31 @@ app.get("/websites", authMiddleware , async(req ,res) => {
       }
     })
 
-    if(response.length < 0){
-       return res.status(200).json({ 
-          message:"No website created yet", 
-          success: true,
-       })
-    } 
+    if (response.length < 0) {
+      return res.status(200).json({
+        message: "No website created yet",
+        success: true,
+      })
+    }
 
-    res.status(200).json({ 
-        data: response
+    res.status(200).json({
+      data: response
     })
-  }catch(error){
-    res.status(404).json({ 
-        error: error
+  } catch (error) {
+    res.status(404).json({
+      error: error
     })
   }
 })
 
-app.get("/websites/matrics", authMiddleware , async(req ,res) => {
-  try{ 
+app.get("/websites/matrics", authMiddleware, async (req, res) => {
+  try {
     const extractDate = (d: string | Date) => new Date(d).toISOString().slice(0, 10);
-    
-    const userWebsite = await prisma.website.findMany({ 
-        where:{ 
-          user_id: req.userId
-        },
+
+    const userWebsite = await prisma.website.findMany({
+      where: {
+        user_id: req.userId
+      },
     })
 
     const websiteIds = userWebsite.map(w => w.id);
@@ -219,19 +223,19 @@ app.get("/websites/matrics", authMiddleware , async(req ,res) => {
     res.status(200).json({
       matrics
     })
-  }catch(error){
+  } catch (error) {
     console.log(error)
   }
 })
 
 
-app.get("/dashboard/status" , authMiddleware , async(req ,res) => { 
-  try{
-    const TotalWebsites = await prisma.website.findMany({ 
-      where:{ 
+app.get("/dashboard/status", authMiddleware, async (req, res) => {
+  try {
+    const TotalWebsites = await prisma.website.findMany({
+      where: {
         user_id: req.userId
       },
-      select: { 
+      select: {
         tick: true
       }
     })
@@ -240,35 +244,65 @@ app.get("/dashboard/status" , authMiddleware , async(req ,res) => {
     let totalCheck = 0;
     let inActive = 0;
     const website = TotalWebsites.length;
-    const responseTime:number[] = [];
+    const responseTime: number[] = [];
 
     TotalWebsites.map(ticks => {
-        ticks.tick.map(data => {
-          if(data.status == "UP"){ 
-             upCount++;
-          }else{ 
-            inActive++;
-          }
-          totalCheck++;
-          responseTime.push(data.response_time)
-        })
+      ticks.tick.map(data => {
+        if (data.status == "UP") {
+          upCount++;
+        } else {
+          inActive++;
+        }
+        totalCheck++;
+        responseTime.push(data.response_time)
+      })
     })
 
     const avgResponse = responseTime.length > 0
-    ? Math.floor(responseTime.reduce((a, b) => a + b, 0) / responseTime.length)
-    : 0;
+      ? Math.floor(responseTime.reduce((a, b) => a + b, 0) / responseTime.length)
+      : 0;
     const upTime = (upCount / totalCheck) * 100;
 
-    res.status(200).json({ 
+    res.status(200).json({
       website: website,
-      upTime: upTime, 
-      avgResponse: avgResponse, 
+      upTime: upTime,
+      avgResponse: avgResponse,
       inActive: inActive
     })
-  }catch(error){
+  } catch (error) {
     console.error(error)
   }
 })
 
+
+app.get("/me", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId
+      }
+    })
+
+    console.log("user", user)
+
+    if (!user) {
+      res.status(404).json({
+        message: "user not found",
+      })
+      return;
+    }
+
+    res.status(200).json({
+      username: user.username,
+      userId: user.id
+    })
+  } catch (error) {
+    res.status(404).json({
+      message: error
+    })
+  }
+})
 
 app.listen(3000);

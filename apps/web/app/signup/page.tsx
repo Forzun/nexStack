@@ -17,7 +17,6 @@ import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 const formSchema = z.object({ 
     username: z.string().email("Invaild email address"), 
@@ -41,12 +40,13 @@ export default function SignupPage() {
         
         if(data.password !== data.confirmPassword){ 
             toast.error("password must be same")      
-            // return;
+            return;
         }
         try{
             const {username  , password} = data;
             const response = await Signup(username , password);
 
+            console.log(response)
             if(!response){
                 toast.error(`${response.message}`);
             }
@@ -64,13 +64,14 @@ export default function SignupPage() {
                 style: {
                   "--border-radius": "calc(var(--radius)  + 4px)",
                 } as React.CSSProperties,
-              })
-            }catch(error: any){
-                console.log(error)
-                    toast.error(JSON.stringify(userError))
-                // router.push('/signin')
-            }finally{ 
+            })
+        }catch(error: any){
+            console.log(error)
+            if(userError){
+                toast.error(JSON.stringify(userError))
             }
+            router.push('/signin')
+        }
         }
 
     return (
@@ -173,7 +174,7 @@ export default function SignupPage() {
                                 </Button>
                             </Field>
                             <FieldDescription className="text-center border-none">
-                                Already have an account? <a href="#">Sign in</a>
+                                Already have an account? <a href="/signin">Sign in</a>
                             </FieldDescription>
                         </FieldGroup>
                     </form>
