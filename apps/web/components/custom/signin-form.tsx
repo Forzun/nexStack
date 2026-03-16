@@ -4,12 +4,13 @@ import {
     FieldDescription,
     FieldGroup,
     FieldLabel,
+    FieldSeparator,
 } from "@workspace/ui/components/field"
 import { Input } from "@workspace/ui/components/input"
 import { Card, CardContent } from "@workspace/ui/components/card"
 import { Button } from "@workspace/ui/components/button"
 
-export function SignupForm({
+export function SigninForm({
     className,
     ...props
 }: React.ComponentProps<"div">) {

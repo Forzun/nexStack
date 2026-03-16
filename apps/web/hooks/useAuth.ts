@@ -1,20 +1,32 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react"
 
+interface ApiResponseError{ 
+    message: string;
+    status?: number;
+    error?: string;
+}
 
 export function useAuth(){
-    const [user , setUser] = useState(null);
-    const [loading  ,setLoading] = useState(true);
+    const [user , setUser] = useState();
+    const [loading  ,setLoading] = useState(false);
+    const [userError , setUseErorr] = useState<string | ApiResponseError>();
 
     const Signup = async(email: string , password: string) => { 
+        setLoading(true)
         try{ 
             const data = await axios.post("http://localhost:3000/user/signup" , { 
-                username: email, 
-                password: password
+                username: "user1@gmail.com", 
+                password: "12345678"
             },);
             setUser(data.data)
-        }catch(error){
-            console.error(error)
+            return data.data
+        }catch(error: any){
+            const axiosError = error as AxiosError<ApiResponseError>;
+            const message = axiosError.response?.data.message;
+            setUseErorr(message)
+        }finally{ 
+            setLoading(true)
         }
     }
     
@@ -40,10 +52,7 @@ export function useAuth(){
         user, 
         loading,
         Signup, 
-        Login
+        Login, 
+        userError
     } 
 }
-
-
-
-    

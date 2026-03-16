@@ -23,7 +23,7 @@ export default function HeroPage() {
 function Navbar() {
     const router = useRouter();
 
-    return <nav className="max-w-7xl mx-auto px-2 py-2 rounded-lg border-2 shadow-xs border-neutral-300/40 text-sm bg-white/30 backdrop-blur-lg text-gray-950 dark:text-gray-50">
+    return <nav className="max-w-6xl mx-auto px-2 py-2 rounded-lg border shadow-xs border-neutral-300/30 text-sm bg-white/60 backdrop-blur-sm text-gray-950 dark:text-gray-50">
         <div className="flex justify-between items-center text-neutral-500 text-sm font-light">
             <div className="flex items-center justify-center gap-5 text-sm">
                 <div className="flex items-center justify-center gap-1">

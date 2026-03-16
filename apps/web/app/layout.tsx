@@ -38,7 +38,7 @@ export default function RootLayout({
         >
           <ViewTransitions>
             <TooltipProvider>
-              <Toaster theme="system" />
+              <Toaster theme="light" />
               {children}
             </TooltipProvider>
           </ViewTransitions>

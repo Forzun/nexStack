@@ -83,7 +83,8 @@ app.post("/user/signup", async (req, res) => {
 
     const existingUser = await prisma.user.findFirst({
       where: {
-        username: username
+        username: username, 
+        password: password
       }
     })
 
@@ -91,6 +92,7 @@ app.post("/user/signup", async (req, res) => {
       res.status(409).json({
         message: "oops user already exist",
       })
+      return;
     }
 
     let user = await prisma.user.create({
@@ -100,15 +102,12 @@ app.post("/user/signup", async (req, res) => {
       }
     })
 
-    if (!user) {
       console.log("user created successfully: ", user)
-    }
-
-    return res.status(200).json({
-      message: "successed!",
-      username: user.username, 
-    })
-
+      return res.status(200).json({
+        message: "user created successfully!",
+        username: user.username, 
+      })
+      
   } catch (error) {
     const message = error instanceof Error ? error.message : "Something went wrong";
     res.status(403).send(message);

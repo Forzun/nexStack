@@ -48,7 +48,7 @@ export default function WebsiteDialog({ title, variant, Icon, className, size }:
 
       toast.success(`site added successfully`)
     } catch (error) {
-      console.error(error)
+      console.error(error)  
     } finally {
       setOpen(false)
     }
