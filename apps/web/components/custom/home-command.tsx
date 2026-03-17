@@ -136,7 +136,9 @@ export function CommandDemo() {
             <div className={iconBox}>
               <Globe className="h-3.5 w-3.5" />
             </div>
-            <span>Website</span>
+            <Link href="/dashboard/websites">
+              <span>Website</span>
+            </Link>
           </CommandItem>
 
           <CommandItem

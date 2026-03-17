@@ -15,14 +15,15 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@workspace/ui/components/sidebar"
-import { LayoutDashboardIcon, ListIcon, CameraIcon, FileTextIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon, House, ChartNoAxesCombined } from "lucide-react"
+import { LayoutDashboardIcon, ListIcon, CameraIcon, FileTextIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon, House, ChartNoAxesCombined, User } from "lucide-react"
 import { Link } from "next-view-transitions"
+import { useAuth } from "@/hooks/useAuth"
 
 const data = {
   user: {
-    name: "shadcn",
+    username: "m@example.com",
     email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    userId: "1234567890",
   },
   navMain: [
     {
@@ -164,6 +165,12 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { user, getSession } = useAuth();
+
+  React.useEffect(() => {
+    getSession();
+  }, [])
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -187,7 +194,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user ?? {}} />
       </SidebarFooter>
     </Sidebar>
   )

@@ -21,7 +21,7 @@ const formSchema = z.object({
 type variant = "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | "custom"
 type size = "default" | "xs" | "sm" | "lg" | "icon" | "icon-xs" | "icon-sm" | "icon-lg" | "non" | null | undefined;
 
-export default function WebsiteDialog({ title, variant, Icon, className, size }: { title?: string, variant: variant, Icon?: LucideIcon, className?: string, size: size }) {
+export default function WebsiteDialog({ title, variant, Icon, className, size, children }: { title?: string, variant: variant, Icon?: LucideIcon, className?: string, size: size, children?: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [loading, setloading] = useState(false);
   const { createWebsite } = useWebsite()
@@ -48,7 +48,7 @@ export default function WebsiteDialog({ title, variant, Icon, className, size }:
 
       toast.success(`site added successfully`)
     } catch (error) {
-      console.error(error)  
+      console.error(error)
     } finally {
       setOpen(false)
     }
@@ -56,7 +56,11 @@ export default function WebsiteDialog({ title, variant, Icon, className, size }:
 
   return <Dialog open={open} onOpenChange={setOpen}>
     <DialogTrigger asChild>
-      <Button size={size} className={className} variant={variant}>{title}{Icon ? <Icon /> : ""}</Button>
+      {children ? children : (
+        <Button size={size} className={className} variant={variant}>
+          {title}{Icon ? <Icon /> : ""}
+        </Button>
+      )}
     </DialogTrigger>
     <DialogContent className="sm:max-w-sm">
       <motion.div

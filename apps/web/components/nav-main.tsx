@@ -11,6 +11,7 @@ import {
 import { CirclePlusIcon, MailIcon } from "lucide-react"
 import { Link } from "next-view-transitions"
 import { usePathname } from "next/navigation"
+import WebsiteDialog from "./custom/dialog"
 
 export function NavMain({
   items,
@@ -22,22 +23,20 @@ export function NavMain({
   }[]
 }) {
   const pathname = usePathname()
-  
-  console.log(pathname)
 
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
           <SidebarMenuItem className="flex items-center gap-2">
-            <SidebarMenuButton
-              tooltip="Quick Create"
-              className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
+            <div
+              className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground flex rounded-md py-1 px-3 items-center w-full gap-2"
             >
               <CirclePlusIcon
+                className="w-4 h-6"
               />
-              <span>Quick Create</span>
-            </SidebarMenuButton>
+              <WebsiteDialog size="non" variant="custom" title="Quick Create" className="w-fit cursor-pointer flex text-sm ring-0 border-none" />
+            </div>
             <Button
               size="icon"
               className="size-8 group-data-[collapsible=icon]:opacity-0"
@@ -50,7 +49,7 @@ export function NavMain({
           </SidebarMenuItem>
         </SidebarMenu>
         <SidebarMenu>
-          {items.map((item) => { 
+          {items.map((item) => {
             const activeUrl = item.url === pathname
             return (
               <SidebarMenuItem key={item.title} className="mt-2">
@@ -61,7 +60,7 @@ export function NavMain({
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-          )
+            )
           })}
         </SidebarMenu>
       </SidebarGroupContent>

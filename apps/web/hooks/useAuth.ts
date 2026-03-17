@@ -58,13 +58,19 @@ export function useAuth() {
 
     async function getSession() {
         try {
+
+            if (token == null) {
+                return null
+            }
+
             const user = await axios.get("http://localhost:3000/me", {
                 headers: {
                     Authorization: token
                 }
             })
             if (user) {
-                return token
+                setUser(user.data)
+                return;
             }
         } catch (error) {
             console.error(error)
@@ -76,6 +82,7 @@ export function useAuth() {
         loading,
         Signup,
         Login,
-        userError
+        userError,
+        getSession
     }
 }

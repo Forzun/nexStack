@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Globe,Shield, Radio } from "lucide-react";
+import { Globe, Shield, Radio } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@workspace/ui/components/card";
-import { useGetTheme } from "@/hooks/getTheme";
-import { useTheme } from "next-themes";
 
 const MiniBarChart = ({ bars = 7, dark = false }: { bars?: number; dark?: boolean }) => {
   const [heights, setHeights] = useState<number[]>(() => Array.from({ length: bars }, () => 50));
@@ -194,7 +192,7 @@ const WIDGETS = [
   },
 ];
 
-export default function FloatingBackground({active}: {active: boolean}) {
+export default function FloatingBackground({ active }: { active: boolean }) {
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">

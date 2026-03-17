@@ -1,3 +1,4 @@
+
 import { WebsiteInfo } from "@/components/table/columns";
 import { isoString, timeAgo } from "@/utils/time-ago";
 import axios from "axios";
@@ -10,7 +11,7 @@ interface ResponseDate {
     user_id: string;
     tick?: {
         id: string;
-        createdAt: Date;
+    createdAt: Date;
         response_time: number;
         status: "UP" | "DOWN" | "UNKNOWN";
     }[];
