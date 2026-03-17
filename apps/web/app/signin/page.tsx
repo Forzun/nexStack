@@ -43,7 +43,7 @@ export default function SignupPage() {
 
             if (response) {
                 toast.success(response.message)
-                router.push("/dashboard")
+                router.push("/dashboard/home")
             }
             console.log("here", password)
             console.log(username, password)

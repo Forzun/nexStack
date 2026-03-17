@@ -1,9 +1,10 @@
 "use client"
 import { Button } from "@workspace/ui/components/button"
-import { ChartNoAxesCombined } from "lucide-react"
+import { ArrowRightIcon, ArrowUp, ArrowUpRight, ChartNoAxesCombined, Snowflake } from "lucide-react"
 import { AnimatedBeamDemo } from "../custom/hero-beam"
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
+import { AnimatedShinyText } from "../custom/shy-text"
 
 export default function HeroPage() {
 
@@ -12,6 +13,29 @@ export default function HeroPage() {
         <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
             <motion.h1 initial={{ opacity: 0, y: 30, filter: "blur(10px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 0.5, ease: "easeInOut" }} className="text-7xl font-extrabold text-neutral-700 tracking-tighter flex items-center gap-3">Datadog for people </motion.h1>
             <motion.p initial={{ opacity: 0, y: 30, filter: "blur(10px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ duration: 1, ease: "easeInOut" }} className="text-3xl text-neutral-600">who check their AWS bill</motion.p>
+
+            <motion.div
+                initial={{
+                    opacity: 0,
+                    y: 40,
+                    filter: "blur(20px)"
+                }}
+                animate={{
+                    opacity: 1,
+                    y: 0,
+                    filter: "blur(0px)"
+                }}
+                transition={{
+                    duration: 1,
+                    ease: "easeInOut"
+                }}
+                className="px-3 py-0.5 border rounded-full bg-neutral-100 mt-1"
+                >
+                <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
+                    <span>Get Started</span>
+                    <ArrowUpRight className="ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+                </AnimatedShinyText>
+            </motion.div>
 
             <div className="w-full h-full mt-20">
                 <AnimatedBeamDemo />
@@ -23,7 +47,7 @@ export default function HeroPage() {
 function Navbar() {
     const router = useRouter();
 
-    return <nav className="max-w-6xl mx-auto px-2 py-2 rounded-lg border shadow-xs border-neutral-300/30 text-sm bg-white/60 backdrop-blur-sm text-gray-950 dark:text-gray-50">
+    return <nav className="max-w-6xl mx-auto px-2 py-2 rounded-md rounded-mdroup-heading]]:text-neutral-400 [&_[cmdk-group-heading]]:upp border shadow-xs border-neutral-300/30 text-sm bg-white/60 backdrop-blur-sm text-gray-950 dark:text-gray-50">
         <div className="flex justify-between items-center text-neutral-500 text-sm font-light">
             <div className="flex items-center justify-center gap-5 text-sm">
                 <div className="flex items-center justify-center gap-1">
@@ -42,5 +66,3 @@ function Navbar() {
         </div>
     </nav>
 }
-
-
