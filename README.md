@@ -1,8 +1,8 @@
 ![image](./packages/public/Screenshot%20from%202026-03-19%2013-55-40.png)
 
 ---
-![Video](./packages/public/Screencast%20from%202026-03-19%2010-19-13.mp4)
 
+https://github.com/user-attachments/assets/5fb76841-f908-4c48-bc9e-008dabb15f71
 
 # NexStack 
 
