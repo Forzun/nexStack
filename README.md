@@ -1,7 +1,7 @@
 ![image](./packages/public/Screenshot%20from%202026-03-19%2013-55-40.png)
 
 ---
-[![Watch the demo](./packages/public/Screencast%20from%202026-03-19%2010-19-13.mp4)]
+![Video](./packages/public/Screencast%20from%202026-03-19%2010-19-13.mp4)
 
 
 # NexStack 
