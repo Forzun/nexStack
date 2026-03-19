@@ -1,7 +1,8 @@
 ![image](./packages/public/Screenshot%20from%202026-03-19%2013-55-40.png)
 
-- 
-<iframe width="560" height="315" src="./packages/public/Screencast from 2026-03-19 10-19-13.webm" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+---
+[![Watch the demo](./packages/public//Screencast%20from%202026-03-19%2010-19-13.webm)]
+
 
 # NexStack 
 
