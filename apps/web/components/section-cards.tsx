@@ -1,7 +1,6 @@
 "use client"
 
 import { useWebsite } from "@/hooks/useWebsites"
-import { Badge } from "@workspace/ui/components/badge"
 import {
   Card,
   CardAction,
@@ -10,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@workspace/ui/components/card"
-import { TrendingUpIcon, TrendingDownIcon, Radio } from "lucide-react"
+import { TrendingUpIcon, Radio } from "lucide-react"
 import { NumberTicker } from "./custom/Number-Ticker"
 import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"

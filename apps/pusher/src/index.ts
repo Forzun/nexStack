@@ -32,6 +32,6 @@ async function main() {
     client.destroy();
 }
 
-setInterval(() => { main() },20 * 1000)
+setInterval(() => { main() }, 20 * 1000)
 
 main();
